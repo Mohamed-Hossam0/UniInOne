@@ -39,7 +39,6 @@ export function ComparePage() {
   const [selectedUniversities, setSelectedUniversities] = useState<(University | null)[]>([
     null,
     null,
-    null,
   ]);
 
   const universities: University[] = [
@@ -106,7 +105,7 @@ export function ComparePage() {
   };
 
   const availableUniversities = universities.filter(
-    (uni) => !selectedUniversities.some((selected) => selected?.id === uni.id)
+    (uni) => !selectedUniversities.some((selected: University | null) => selected?.id === uni.id)
   );
 
   const ComparisonMetric = ({
@@ -123,7 +122,7 @@ export function ComparePage() {
         <Icon className="h-5 w-5" />
         <span>{label}</span>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {values.map((value, index) => (
           <div key={index} className="text-center">
             <p className="text-gray-900">{value || '-'}</p>
@@ -145,7 +144,7 @@ export function ComparePage() {
           >
             <h1 className="text-4xl text-white mb-4">Compare Universities</h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              Compare up to 3 universities side by side to make the best decision for your future
+              Compare two universities side by side to make the best decision for your future
             </p>
           </motion.div>
         </div>
@@ -157,9 +156,9 @@ export function ComparePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="grid md:grid-cols-3 gap-6 mb-12"
+          className="grid md:grid-cols-2 gap-6 mb-12"
         >
-          {selectedUniversities.map((university, index) => (
+          {selectedUniversities.map((university: University | null, index: number) => (
             <Card
               key={index}
               className="p-6 shadow-lg border-0 bg-white/80 backdrop-blur-sm"
@@ -203,7 +202,7 @@ export function ComparePage() {
                   </div>
                   <p className="text-gray-500 mb-4">Select a university</p>
                   <Select
-                    onValueChange={(value) => {
+                    onValueChange={(value: string) => {
                       const uni = universities.find((u) => u.id.toString() === value);
                       if (uni) handleSelectUniversity(uni, index);
                     }}
@@ -226,7 +225,7 @@ export function ComparePage() {
         </motion.div>
 
         {/* Comparison Table */}
-        {selectedUniversities.some((uni) => uni !== null) && (
+        {selectedUniversities.some((uni: University | null) => uni !== null) && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -239,27 +238,27 @@ export function ComparePage() {
                 <ComparisonMetric
                   icon={Building2}
                   label="Type"
-                  values={selectedUniversities.map((uni) => uni?.type || '')}
+                  values={selectedUniversities.map((uni: University | null) => uni?.type || '')}
                 />
                 <ComparisonMetric
                   icon={Calendar}
                   label="Founded"
-                  values={selectedUniversities.map((uni) => uni?.founded || '')}
+                  values={selectedUniversities.map((uni: University | null) => uni?.founded || '')}
                 />
                 <ComparisonMetric
                   icon={Users}
                   label="Student Body"
-                  values={selectedUniversities.map((uni) => uni?.students || '')}
+                  values={selectedUniversities.map((uni: University | null) => uni?.students || '')}
                 />
                 <ComparisonMetric
                   icon={DollarSign}
                   label="Tuition Range"
-                  values={selectedUniversities.map((uni) => uni?.tuitionRange || '')}
+                  values={selectedUniversities.map((uni: University | null) => uni?.tuitionRange || '')}
                 />
                 <ComparisonMetric
                   icon={Star}
                   label="Rating"
-                  values={selectedUniversities.map((uni) =>
+                  values={selectedUniversities.map((uni: University | null) =>
                     uni ? `${uni.rating}/5.0` : ''
                   )}
                 />
@@ -268,12 +267,12 @@ export function ComparePage() {
               {/* Programs Comparison */}
               <div className="mt-8 pt-8 border-t">
                 <h3 className="text-lg text-gray-900 mb-4">Popular Programs</h3>
-                <div className="grid grid-cols-3 gap-4">
-                  {selectedUniversities.map((uni, index) => (
+                <div className="grid grid-cols-2 gap-4">
+                  {selectedUniversities.map((uni: University | null, index: number) => (
                     <div key={index}>
                       {uni ? (
                         <div className="space-y-2">
-                          {uni.programs.slice(0, 4).map((program, pIndex) => (
+                          {uni.programs.slice(0, 4).map((program: string, pIndex: number) => (
                             <div
                               key={pIndex}
                               className="flex items-center gap-2 text-sm text-gray-700"
@@ -295,7 +294,7 @@ export function ComparePage() {
         )}
 
         {/* Empty State */}
-        {!selectedUniversities.some((uni) => uni !== null) && (
+        {!selectedUniversities.some((uni: University | null) => uni !== null) && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { Globe, Menu, X, User, LogIn, LogOut } from 'lucide-react';
-import { Avatar, AvatarFallback } from './ui/avatar';
+import { Avatar, AvatarFallback } from '../ui/avatar';
 
 interface HeaderProps {
   currentPage: string;

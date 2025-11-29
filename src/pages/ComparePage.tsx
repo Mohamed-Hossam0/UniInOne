@@ -39,7 +39,6 @@ export function ComparePage() {
   const [selectedUniversities, setSelectedUniversities] = useState<(University | null)[]>([
     null,
     null,
-    null,
   ]);
 
   const universities: University[] = [
@@ -123,7 +122,7 @@ export function ComparePage() {
         <Icon className="h-5 w-5" />
         <span>{label}</span>
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {values.map((value, index) => (
           <div key={index} className="text-center">
             <p className="text-gray-900">{value || '-'}</p>
@@ -145,7 +144,7 @@ export function ComparePage() {
           >
             <h1 className="text-4xl text-white mb-4">Compare Universities</h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              Compare up to 3 universities side by side to make the best decision for your future
+              Compare two universities side by side to make the best decision for your future
             </p>
           </motion.div>
         </div>
@@ -157,7 +156,7 @@ export function ComparePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="grid md:grid-cols-3 gap-6 mb-12"
+          className="grid md:grid-cols-2 gap-6 mb-12"
         >
           {selectedUniversities.map((university, index) => (
             <Card
@@ -268,7 +267,7 @@ export function ComparePage() {
               {/* Programs Comparison */}
               <div className="mt-8 pt-8 border-t">
                 <h3 className="text-lg text-gray-900 mb-4">Popular Programs</h3>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   {selectedUniversities.map((uni, index) => (
                     <div key={index}>
                       {uni ? (
