@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { Card } from './ui/card';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { Card } from '../components/ui/card';
 import { GraduationCap, Mail, Lock, User, ArrowRight } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
 
-export function AuthPage() {
-  const navigate = useNavigate();
-  const { login } = useAuth();
+interface AuthPageProps {
+  onLogin: (email: string, role: 'student' | 'admin') => void;
+  onPageChange: (page: string) => void;
+}
+
+export function AuthPage({ onLogin, onPageChange }: AuthPageProps) {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [registerName, setRegisterName] = useState('');
@@ -21,15 +22,13 @@ export function AuthPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     // Mock login - in real app, this would validate credentials
-    login(loginEmail, 'student');
-    navigate('/');
+    onLogin(loginEmail, 'student');
   };
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     // Mock register - in real app, this would create account
-    login(registerEmail, 'student');
-    navigate('/');
+    onLogin(registerEmail, 'student');
   };
 
   return (
@@ -145,7 +144,7 @@ export function AuthPage() {
                     <div className="text-center">
                       <button
                         type="button"
-                        onClick={() => navigate('/admin-login')}
+                        onClick={() => onPageChange('admin-login')}
                         className="text-sm text-blue-900 hover:underline"
                       >
                         Admin Login →

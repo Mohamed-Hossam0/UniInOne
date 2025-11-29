@@ -1,18 +1,20 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Search, ArrowRight, MapPin, Users, GraduationCap } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
-export function Hero() {
-  const navigate = useNavigate();
+interface HeroProps {
+  onPageChange: (page: string) => void;
+}
+
+export function Hero({ onPageChange }: HeroProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      navigate('/universities');
+      onPageChange('universities');
     }
   };
 
@@ -101,7 +103,7 @@ export function Hero() {
             >
               <Button
                 size="lg"
-                onClick={() => navigate('/universities')}
+                onClick={() => onPageChange('universities')}
                 className="bg-gradient-to-r from-blue-900 to-emerald-600 hover:from-blue-800 hover:to-emerald-500 group"
               >
                 Explore Universities
@@ -110,7 +112,7 @@ export function Hero() {
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => navigate('/faculties')}
+                onClick={() => onPageChange('majors')}
                 className="border-emerald-600 text-emerald-700 hover:bg-emerald-50 group"
               >
                 Browse Majors
@@ -154,7 +156,7 @@ export function Hero() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <ImageWithFallback
-                src="https://img.youm7.com/ArticleImgs/2024/8/5/244087-%D9%82%D8%A8%D8%A9.jpg"
+                src="https://images.unsplash.com/photo-1612277107663-a65c0f67be64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB1bml2ZXJzaXR5JTIwY2FtcHVzJTIwc3R1ZGVudHN8ZW58MXx8fHwxNTc3NzI2MzU5fDA&ixlib=rb-4.1.0&q=80&w=1080"
                 alt="Modern university campus with students"
                 className="w-full h-[500px] object-cover"
               />

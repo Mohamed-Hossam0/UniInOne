@@ -1,7 +1,6 @@
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Card } from './ui/card';
-import { Button } from './ui/button';
+import { Card } from '../components/ui/card';
+import { Button } from '../components/ui/button';
 import {
   GraduationCap,
   Target,
@@ -13,8 +12,11 @@ import {
   ArrowRight,
 } from 'lucide-react';
 
-export function AboutPage() {
-  const navigate = useNavigate();
+interface AboutPageProps {
+  onPageChange: (page: string) => void;
+}
+
+export function AboutPage({ onPageChange }: AboutPageProps) {
   const values = [
     {
       icon: Target,
@@ -201,7 +203,7 @@ export function AboutPage() {
               Join thousands of students who have already discovered their ideal academic path with UniInOne
             </p>
             <Button
-              onClick={() => navigate('/universities')}
+              onClick={() => onPageChange('universities')}
               size="lg"
               className="bg-white text-blue-900 hover:bg-gray-100 group"
             >

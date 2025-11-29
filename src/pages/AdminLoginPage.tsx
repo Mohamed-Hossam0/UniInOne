@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Card } from './ui/card';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Card } from '../components/ui/card';
 import { Shield, Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react';
-import { Alert, AlertDescription } from './ui/alert';
-import { useAuth } from '../context/AuthContext';
+import { Alert, AlertDescription } from '../components/ui/alert';
 
-export function AdminLoginPage() {
-  const navigate = useNavigate();
-  const { adminLogin } = useAuth();
+interface AdminLoginPageProps {
+  onAdminLogin: (email: string) => void;
+  onPageChange: (page: string) => void;
+}
+
+export function AdminLoginPage({ onAdminLogin, onPageChange }: AdminLoginPageProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [accessCode, setAccessCode] = useState('');
@@ -19,8 +20,7 @@ export function AdminLoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Mock admin authentication
-    adminLogin(email);
-    navigate('/admin-dashboard');
+    onAdminLogin(email);
   };
 
   return (
@@ -123,7 +123,7 @@ export function AdminLoginPage() {
               <div className="text-center">
                 <button
                   type="button"
-                  onClick={() => navigate('/login')}
+                  onClick={() => onPageChange('login')}
                   className="text-sm text-blue-200 hover:text-white transition-colors"
                 >
                   ← Back to Student Login

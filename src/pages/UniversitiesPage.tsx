@@ -1,20 +1,130 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Card, CardContent, CardHeader } from './ui/card';
-import { Badge } from './ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Card, CardContent, CardHeader } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Search, MapPin, Users, Star, Calendar, Filter, ExternalLink } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { universities } from '../data/universities';
+import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
-export function UniversitiesPage() {
-  const navigate = useNavigate();
+interface University {
+  id: number;
+  name: string;
+  arabicName: string;
+  city: string;
+  type: 'Public' | 'Private';
+  founded: number;
+  students: string;
+  ranking: number;
+  image: string;
+  programs: string[];
+  tuitionRange: string;
+  rating: number;
+  description: string;
+}
+
+interface UniversitiesPageProps {
+  onUniversitySelect: (university: University) => void;
+}
+
+export function UniversitiesPage({ onUniversitySelect }: UniversitiesPageProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [cityFilter, setCityFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [sortBy, setSortBy] = useState('ranking');
+
+  const universities: University[] = [
+    {
+      id: 1,
+      name: 'Cairo University',
+      arabicName: 'جامعة القاهرة',
+      city: 'Cairo',
+      type: 'Public',
+      founded: 1908,
+      students: '155,000+',
+      ranking: 1,
+      image: 'https://images.unsplash.com/photo-1680617877570-00ca36572206?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlZ3lwdGlhbiUyMHVuaXZlcnNpdHklMjBjYWlyb3xlbnwxfHx8fDE3NTc3ODAzNDd8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      programs: ['Medicine', 'Engineering', 'Law', 'Business', 'Arts'],
+      tuitionRange: 'EGP 1,500 - 15,000',
+      rating: 4.8,
+      description: 'Egypt\'s premier university, renowned for academic excellence and research innovation.'
+    },
+    {
+      id: 2,
+      name: 'American University in Cairo',
+      arabicName: 'الجامعة الأمريكية بالقاهرة',
+      city: 'Cairo',
+      type: 'Private',
+      founded: 1919,
+      students: '7,000+',
+      ranking: 2,
+      image: 'https://images.unsplash.com/photo-1722248540590-ba8b7af1d7b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHVkZW50cyUyMHN0dWR5aW5nJTIwdW5pdmVyc2l0eSUyMGxpYnJhcnl8ZW58MXx8fHwxNzU3NzgwMzQ3fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      programs: ['Business', 'Engineering', 'Computer Science', 'Political Science', 'Psychology'],
+      tuitionRange: 'USD 15,000 - 25,000',
+      rating: 4.7,
+      description: 'Leading liberal arts university offering American-style education in Egypt.'
+    },
+    {
+      id: 3,
+      name: 'Alexandria University',
+      arabicName: 'جامعة الإسكندرية',
+      city: 'Alexandria',
+      type: 'Public',
+      founded: 1942,
+      students: '180,000+',
+      ranking: 3,
+      image: 'https://images.unsplash.com/photo-1738949538943-e54722a44ffc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxncmFkdWF0aW9uJTIwY2VyZW1vbnklMjB1bml2ZXJzaXR5fGVufDF8fHx8MTc1NzY5MzY2MHww&ixlib=rb-4.1.0&q=80&w=1080',
+      programs: ['Medicine', 'Engineering', 'Agriculture', 'Pharmacy', 'Science'],
+      tuitionRange: 'EGP 1,200 - 12,000',
+      rating: 4.6,
+      description: 'Historic university known for medical and engineering programs with Mediterranean campus.'
+    },
+    {
+      id: 4,
+      name: 'Ain Shams University',
+      arabicName: 'جامعة عين شمس',
+      city: 'Cairo',
+      type: 'Public',
+      founded: 1950,
+      students: '200,000+',
+      ranking: 4,
+      image: 'https://images.unsplash.com/photo-1518152006812-edab29b069ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhY2FkZW1pYyUyMHJlc2VhcmNoJTIwbGFib3JhdG9yeXxlbnwxfHx8fDE3NTc3ODAzNDh8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      programs: ['Medicine', 'Engineering', 'Commerce', 'Education', 'Computer Science'],
+      tuitionRange: 'EGP 1,800 - 18,000',
+      rating: 4.5,
+      description: 'Comprehensive university with strong research focus and diverse academic programs.'
+    },
+    {
+      id: 5,
+      name: 'German University in Cairo',
+      arabicName: 'الجامعة الألمانية بالقاهرة',
+      city: 'Cairo',
+      type: 'Private',
+      founded: 2003,
+      students: '12,000+',
+      ranking: 5,
+      image: 'https://images.unsplash.com/photo-1612277107663-a65c0f67be64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB1bml2ZXJzaXR5JTIwY2FtcHVzJTIwc3R1ZGVudHN8ZW58MXx8fHwxNTc3NzI2MzU5fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      programs: ['Engineering', 'Management', 'Information Technology', 'Applied Sciences'],
+      tuitionRange: 'EUR 4,000 - 8,000',
+      rating: 4.6,
+      description: 'German-Egyptian partnership offering European-standard education and research.'
+    },
+    {
+      id: 6,
+      name: 'Mansoura University',
+      arabicName: 'جامعة المنصورة',
+      city: 'Mansoura',
+      type: 'Public',
+      founded: 1972,
+      students: '140,000+',
+      ranking: 6,
+      image: 'https://images.unsplash.com/photo-1722248540590-ba8b7af1d7b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHVkZW50cyUyMHN0dWR5aW5nJTIwdW5pdmVyc2l0eSUyMGxpYnJhcnl8ZW58MXx8fHwxNzU3NzgwMzQ3fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      programs: ['Medicine', 'Engineering', 'Science', 'Agriculture', 'Veterinary Medicine'],
+      tuitionRange: 'EGP 1,400 - 14,000',
+      rating: 4.4,
+      description: 'Leading regional university with excellent medical and engineering faculties.'
+    }
+  ];
 
   const cities = ['all', 'Cairo', 'Alexandria', 'Giza', 'Mansoura', 'Assiut'];
   const types = ['all', 'Public', 'Private'];
@@ -192,7 +302,7 @@ export function UniversitiesPage() {
                       <p className="text-sm font-medium text-gray-900">{university.tuitionRange}</p>
                     </div>
                     <Button
-                      onClick={() => navigate(`/universities/${university.id}`)}
+                      onClick={() => onUniversitySelect(university)}
                       size="sm"
                       className="bg-blue-900 hover:bg-blue-800"
                     >

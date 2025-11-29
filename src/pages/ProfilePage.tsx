@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Textarea } from './ui/textarea';
-import { Card } from './ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { Badge } from './ui/badge';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Textarea } from '../components/ui/textarea';
+import { Card } from '../components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/avatar';
+import { Badge } from '../components/ui/badge';
 import {
   User,
   Mail,
@@ -21,15 +21,15 @@ import {
   Edit,
 } from 'lucide-react';
 
-import { useAuth } from '../context/AuthContext';
+interface ProfilePageProps {
+  user: {
+    name: string;
+    email: string;
+    role: 'student' | 'admin';
+  };
+}
 
-export function ProfilePage() {
-  const { user } = useAuth();
-  
-  if (!user) {
-    return null;
-  }
-
+export function ProfilePage({ user }: ProfilePageProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(user.name || 'Student Name');
   const [phone, setPhone] = useState('+20 123 456 7890');

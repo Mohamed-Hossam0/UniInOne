@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { useParams, useNavigate, Navigate } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { Button } from '../components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { 
   ArrowLeft, 
   MapPin, 
@@ -21,18 +20,31 @@ import {
   BookOpen,
   UserCheck
 } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { getUniversityById } from '../data/universities';
+import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
-export function UniversityDetail() {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const university = id ? getUniversityById(parseInt(id)) : undefined;
+interface University {
+  id: number;
+  name: string;
+  arabicName: string;
+  city: string;
+  type: 'Public' | 'Private';
+  founded: number;
+  students: string;
+  ranking: number;
+  image: string;
+  programs: string[];
+  tuitionRange: string;
+  rating: number;
+  description: string;
+}
+
+interface UniversityDetailProps {
+  university: University;
+  onBack: () => void;
+}
+
+export function UniversityDetail({ university, onBack }: UniversityDetailProps) {
   const [activeTab, setActiveTab] = useState('overview');
-
-  if (!university) {
-    return <Navigate to="/universities" replace />;
-  }
 
   const facilities = [
     'Modern Libraries', 'Research Labs', 'Sports Complex', 'Student Housing',
@@ -59,7 +71,7 @@ export function UniversityDetail() {
       {/* Back Button */}
       <Button 
         variant="outline" 
-        onClick={() => navigate('/universities')}
+        onClick={onBack}
         className="mb-6 flex items-center space-x-2"
       >
         <ArrowLeft className="h-4 w-4" />
