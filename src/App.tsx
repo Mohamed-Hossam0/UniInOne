@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { UniversitiesPage } from './components/UniversitiesPage';
 import { UniversityDetail } from './components/UniversityDetail';
 import { FacultiesPage } from './components/FacultiesPage';
+import { FacultyDetail } from './components/FacultyDetail';
 import { AuthPage } from './components/AuthPage';
 import { ProfilePage } from './components/ProfilePage';
 import { AdminLoginPage } from './components/AdminLoginPage';
@@ -27,6 +28,7 @@ export default function App() {
               <Route path="/universities" element={<UniversitiesPage />} />
               <Route path="/universities/:id" element={<UniversityDetail />} />
               <Route path="/faculties" element={<FacultiesPage />} />
+              <Route path="/faculties/:id" element={<FacultyDetail />} />
               <Route path="/compare" element={<ComparePage />} />
               <Route path="/login" element={<AuthPage />} />
               <Route 
