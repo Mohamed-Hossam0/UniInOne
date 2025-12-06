@@ -15,47 +15,50 @@ import { ComparePage } from './components/ComparePage';
 import { Footer } from './components/Footer';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <div className="min-h-screen bg-white">
-          <Header />
-          <main>
-            <Routes>
-              <Route path="/" element={<Hero />} />
-              <Route path="/universities" element={<UniversitiesPage />} />
-              <Route path="/universities/:id" element={<UniversityDetail />} />
-              <Route path="/faculties" element={<FacultiesPage />} />
-              <Route path="/faculties/:id" element={<FacultyDetail />} />
-              <Route path="/compare" element={<ComparePage />} />
-              <Route path="/login" element={<AuthPage />} />
-              <Route 
-                path="/profile" 
-                element={
-                  <ProtectedRoute>
-                    <ProfilePage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="/admin-login" element={<AdminLoginPage />} />
-              <Route 
-                path="/admin-dashboard" 
-                element={
-                  <ProtectedRoute requireAdmin>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <div className="min-h-screen bg-background">
+            <Header />
+            <main>
+              <Routes>
+                <Route path="/" element={<Hero />} />
+                <Route path="/universities" element={<UniversitiesPage />} />
+                <Route path="/universities/:id" element={<UniversityDetail />} />
+                <Route path="/faculties" element={<FacultiesPage />} />
+                <Route path="/faculties/:id" element={<FacultyDetail />} />
+                <Route path="/compare" element={<ComparePage />} />
+                <Route path="/login" element={<AuthPage />} />
+                <Route 
+                  path="/profile" 
+                  element={
+                    <ProtectedRoute>
+                      <ProfilePage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route path="/admin-login" element={<AdminLoginPage />} />
+                <Route 
+                  path="/admin-dashboard" 
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

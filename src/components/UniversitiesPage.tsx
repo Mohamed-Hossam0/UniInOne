@@ -42,16 +42,16 @@ export function UniversitiesPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Universities in Egypt</h1>
-        <p className="text-gray-600">Discover and compare top universities across Egypt</p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">Universities in Egypt</h1>
+        <p className="text-muted-foreground">Discover and compare top universities across Egypt</p>
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-white rounded-xl shadow-sm border p-6 mb-8">
+      <div className="bg-card dark:bg-gray-800/50 rounded-xl shadow-sm border border-border p-6 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {/* Search */}
           <div className="lg:col-span-2 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
             <Input
               placeholder="Search universities or programs..."
               value={searchQuery}
@@ -105,7 +105,7 @@ export function UniversitiesPage() {
 
       {/* Results Count */}
       <div className="mb-6">
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           Showing {filteredUniversities.length} of {universities.length} universities
         </p>
       </div>
@@ -113,7 +113,7 @@ export function UniversitiesPage() {
       {/* Universities Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredUniversities.map((university) => (
-          <Card key={university.id} className="group hover:shadow-lg transition-all duration-300 border-gray-200 hover:border-blue-300">
+          <Card key={university.id} className="group hover:shadow-lg transition-all duration-300 border-border hover:border-blue-400 dark:hover:border-blue-500">
             <CardHeader className="p-0">
               <div className="relative overflow-hidden rounded-t-lg">
                 <ImageWithFallback
@@ -137,13 +137,13 @@ export function UniversitiesPage() {
             <CardContent className="p-6">
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  <h3 className="text-lg font-semibold text-foreground mb-1">
                     {university.name}
                   </h3>
-                  <p className="text-sm text-gray-600">{university.arabicName}</p>
+                  <p className="text-sm text-muted-foreground">{university.arabicName}</p>
                 </div>
 
-                <div className="flex items-center justify-between text-sm text-gray-600">
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <div className="flex items-center space-x-1">
                     <MapPin className="h-4 w-4" />
                     <span>{university.city}</span>
@@ -155,22 +155,22 @@ export function UniversitiesPage() {
                 </div>
 
                 <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center space-x-1 text-gray-600">
+                  <div className="flex items-center space-x-1 text-muted-foreground">
                     <Users className="h-4 w-4" />
                     <span>{university.students}</span>
                   </div>
-                  <div className="flex items-center space-x-1 text-gray-600">
+                  <div className="flex items-center space-x-1 text-muted-foreground">
                     <Calendar className="h-4 w-4" />
                     <span>Est. {university.founded}</span>
                   </div>
                 </div>
 
-                <p className="text-sm text-gray-600 line-clamp-2">
+                <p className="text-sm text-muted-foreground line-clamp-2">
                   {university.description}
                 </p>
 
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-gray-700">Popular Programs:</p>
+                  <p className="text-sm font-medium text-foreground">Popular Programs:</p>
                   <div className="flex flex-wrap gap-1">
                     {university.programs.slice(0, 3).map((program, index) => (
                       <Badge key={index} variant="outline" className="text-xs">
@@ -185,16 +185,16 @@ export function UniversitiesPage() {
                   </div>
                 </div>
 
-                <div className="pt-2 border-t">
+                <div className="pt-2 border-t border-border">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs text-gray-500">Tuition Range</p>
-                      <p className="text-sm font-medium text-gray-900">{university.tuitionRange}</p>
+                      <p className="text-xs text-muted-foreground">Tuition Range</p>
+                      <p className="text-sm font-medium text-foreground">{university.tuitionRange}</p>
                     </div>
                     <Button
                       onClick={() => navigate(`/universities/${university.id}`)}
                       size="sm"
-                      className="bg-blue-900 hover:bg-blue-800"
+                      className="bg-blue-900 dark:bg-blue-800 hover:bg-blue-800 dark:hover:bg-blue-700"
                     >
                       View Details
                       <ExternalLink className="ml-1 h-3 w-3" />
@@ -209,11 +209,11 @@ export function UniversitiesPage() {
 
       {filteredUniversities.length === 0 && (
         <div className="text-center py-12">
-          <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-            <Search className="h-8 w-8 text-gray-400" />
+          <div className="w-16 h-16 mx-auto mb-4 bg-muted rounded-full flex items-center justify-center">
+            <Search className="h-8 w-8 text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No universities found</h3>
-          <p className="text-gray-600">Try adjusting your search criteria or filters</p>
+          <h3 className="text-lg font-medium text-foreground mb-2">No universities found</h3>
+          <p className="text-muted-foreground">Try adjusting your search criteria or filters</p>
         </div>
       )}
     </div>

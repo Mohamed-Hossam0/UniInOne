@@ -50,11 +50,11 @@ export function FacultiesPage() {
 
   const getCompetitivenessColor = (level: string) => {
     switch (level) {
-      case 'Very High': return 'bg-red-100 text-red-800';
-      case 'High': return 'bg-orange-100 text-orange-800';
-      case 'Medium': return 'bg-yellow-100 text-yellow-800';
-      case 'Moderate': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'Very High': return 'bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300';
+      case 'High': return 'bg-orange-100 dark:bg-orange-900/50 text-orange-800 dark:text-orange-300';
+      case 'Medium': return 'bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-300';
+      case 'Moderate': return 'bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300';
+      default: return 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300';
     }
   };
 
@@ -67,19 +67,19 @@ export function FacultiesPage() {
             <GraduationCap className="h-7 w-7 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl text-gray-900">University Faculties</h1>
-            <p className="text-gray-600">كليات الجامعات المصرية</p>
+            <h1 className="text-3xl text-foreground">University Faculties</h1>
+            <p className="text-muted-foreground">كليات الجامعات المصرية</p>
           </div>
         </div>
-        <p className="text-gray-600 mt-2">Explore academic faculties and their specialized departments across Egyptian universities</p>
+        <p className="text-muted-foreground mt-2">Explore academic faculties and their specialized departments across Egyptian universities</p>
       </div>
 
       {/* Filters and Search */}
-      <div className="bg-white rounded-xl shadow-sm border p-6 mb-8">
+      <div className="bg-card dark:bg-gray-800/50 rounded-xl shadow-sm border border-border p-6 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Search */}
           <div className="lg:col-span-2 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
             <Input
               placeholder="Search faculties, departments, or universities..."
               value={searchQuery}
@@ -119,7 +119,7 @@ export function FacultiesPage() {
 
       {/* Results Count */}
       <div className="mb-6">
-        <p className="text-gray-600">
+        <p className="text-muted-foreground">
           Showing {filteredFaculties.length} of {faculties.length} faculties
         </p>
       </div>
@@ -129,7 +129,7 @@ export function FacultiesPage() {
         {filteredFaculties.map((faculty) => {
           const IconComponent = faculty.icon;
           return (
-            <Card key={faculty.id} className="group hover:shadow-xl transition-all duration-300 border-gray-200 hover:border-blue-400">
+            <Card key={faculty.id} className="group hover:shadow-xl transition-all duration-300 border-border hover:border-blue-400 dark:hover:border-blue-500">
               <CardHeader>
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-start gap-3">
@@ -138,8 +138,8 @@ export function FacultiesPage() {
                     </div>
                     <div>
                       <CardTitle className="text-lg mb-1">{faculty.name}</CardTitle>
-                      <p className="text-sm text-gray-600">{faculty.arabicName}</p>
-                      <Badge className="mt-2 bg-blue-50 text-blue-900 hover:bg-blue-100">
+                      <p className="text-sm text-muted-foreground">{faculty.arabicName}</p>
+                      <Badge className="mt-2 bg-blue-50 dark:bg-blue-900/50 text-blue-900 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/70">
                         {faculty.category}
                       </Badge>
                     </div>
@@ -151,40 +151,40 @@ export function FacultiesPage() {
               </CardHeader>
               
               <CardContent className="space-y-4">
-                <p className="text-sm text-gray-700 leading-relaxed">{faculty.description}</p>
+                <p className="text-sm text-foreground leading-relaxed">{faculty.description}</p>
 
                 {/* Key Info */}
-                <div className="grid grid-cols-2 gap-3 py-3 border-t border-b">
+                <div className="grid grid-cols-2 gap-3 py-3 border-t border-b border-border">
                   <div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
                       <Clock className="h-4 w-4" />
                       <span>Duration</span>
                     </div>
-                    <p className="text-sm font-medium">{faculty.duration}</p>
+                    <p className="text-sm font-medium text-foreground">{faculty.duration}</p>
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
                       <Users className="h-4 w-4" />
                       <span>Students</span>
                     </div>
-                    <p className="text-sm font-medium">{faculty.studentsCount}</p>
+                    <p className="text-sm font-medium text-foreground">{faculty.studentsCount}</p>
                   </div>
                 </div>
 
                 {/* Entry Requirements */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-gray-700">Entry Requirements:</p>
+                    <p className="text-sm font-medium text-foreground">Entry Requirements:</p>
                     <Badge className={getCompetitivenessColor(faculty.admissionCompetitiveness)}>
                       {faculty.admissionCompetitiveness}
                     </Badge>
                   </div>
-                  <p className="text-sm text-gray-600 bg-gray-50 p-2 rounded-md">{faculty.entryRequirements}</p>
+                  <p className="text-sm text-muted-foreground bg-muted dark:bg-gray-700/50 p-2 rounded-md">{faculty.entryRequirements}</p>
                 </div>
 
                 {/* Departments */}
                 <div>
-                  <p className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <p className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
                     <BookOpen className="h-4 w-4" />
                     Main Departments:
                   </p>
@@ -204,26 +204,26 @@ export function FacultiesPage() {
 
                 {/* Universities */}
                 <div>
-                  <p className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <p className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
                     <MapPin className="h-4 w-4" />
                     Available At:
                   </p>
                   <div className="space-y-1">
                     {faculty.universities.slice(0, 3).map((uni, index) => (
-                      <div key={index} className="text-xs text-gray-600 flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 bg-emerald-600 rounded-full"></div>
+                      <div key={index} className="text-xs text-muted-foreground flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-emerald-600 dark:bg-emerald-400 rounded-full"></div>
                         <span>{uni}</span>
                       </div>
                     ))}
                     {faculty.universities.length > 3 && (
-                      <p className="text-xs text-gray-500 ml-3.5">+{faculty.universities.length - 3} more universities</p>
+                      <p className="text-xs text-muted-foreground ml-3.5">+{faculty.universities.length - 3} more universities</p>
                     )}
                   </div>
                 </div>
 
                 {/* Career Prospects */}
                 <div>
-                  <p className="text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <p className="text-sm font-medium text-foreground mb-2 flex items-center gap-2">
                     <Award className="h-4 w-4" />
                     Career Prospects:
                   </p>
@@ -242,9 +242,9 @@ export function FacultiesPage() {
                 </div>
 
                 {/* Accreditation */}
-                <div className="pt-2 border-t">
-                  <p className="text-xs text-gray-500 mb-1">Accredited by:</p>
-                  <p className="text-xs text-gray-600">{faculty.accreditation.join(' • ')}</p>
+                <div className="pt-2 border-t border-border">
+                  <p className="text-xs text-muted-foreground mb-1">Accredited by:</p>
+                  <p className="text-xs text-muted-foreground">{faculty.accreditation.join(' • ')}</p>
                 </div>
 
                 <Button 
@@ -262,16 +262,16 @@ export function FacultiesPage() {
 
       {filteredFaculties.length === 0 && (
         <div className="text-center py-16">
-          <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-emerald-100 rounded-full flex items-center justify-center">
-            <Search className="h-10 w-10 text-blue-900" />
+          <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 dark:from-blue-900/50 to-emerald-100 dark:to-emerald-900/50 rounded-full flex items-center justify-center">
+            <Search className="h-10 w-10 text-blue-900 dark:text-blue-400" />
           </div>
-          <h3 className="text-lg text-gray-900 mb-2">No faculties found</h3>
-          <p className="text-gray-600">Try adjusting your search criteria or filters</p>
+          <h3 className="text-lg text-foreground mb-2">No faculties found</h3>
+          <p className="text-muted-foreground">Try adjusting your search criteria or filters</p>
         </div>
       )}
 
       {/* Statistics Section */}
-      <div className="mt-16 bg-gradient-to-r from-blue-900 via-blue-800 to-emerald-600 rounded-2xl p-10 text-white relative overflow-hidden">
+      <div className="mt-12 bg-gradient-to-r from-blue-900 via-blue-800 to-emerald-600 rounded-xl p-10 text-white relative overflow-hidden shadow-sm border border-transparent">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-white opacity-5 rounded-full -ml-48 -mb-48"></div>
         
@@ -297,14 +297,14 @@ export function FacultiesPage() {
       </div>
 
       {/* Info Section */}
-      <div className="mt-12 bg-blue-50 rounded-xl p-8 border border-blue-100">
+      <div className="mt-12 bg-card dark:bg-gray-800/50 rounded-xl p-8 border border-border shadow-sm">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 bg-blue-900 rounded-lg flex items-center justify-center flex-shrink-0">
             <GraduationCap className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h3 className="text-lg text-gray-900 mb-2">About University Faculties</h3>
-            <p className="text-sm text-gray-700 leading-relaxed">
+            <h3 className="text-lg text-foreground mb-2">About University Faculties</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Egyptian universities are organized into specialized faculties, each offering comprehensive education in specific fields. 
               Each faculty contains multiple departments and specializations, providing students with deep expertise in their chosen field. 
               Faculties maintain high academic standards through accreditation from professional syndicates and quality assurance organizations, 
