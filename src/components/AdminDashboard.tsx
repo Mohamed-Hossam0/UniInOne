@@ -52,8 +52,27 @@ export function AdminDashboard() {
   const { universities, addUniversity, updateUniversity, deleteUniversity } = useUniversities();
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddUniversityOpen, setIsAddUniversityOpen] = useState(false);
+  const [isEditUniversityOpen, setIsEditUniversityOpen] = useState(false);
   const [editingUniversity, setEditingUniversity] = useState<University | null>(null);
   const [deleteUniversityId, setDeleteUniversityId] = useState<number | null>(null);
+
+  // Student state
+  const [students, setStudents] = useState([
+    { id: 1, name: 'Ahmed Hassan', email: 'ahmed@example.com', university: 'Cairo University', status: 'Active' as 'Active' | 'Pending', joined: '2024-09-01' },
+    { id: 2, name: 'Sara Mohamed', email: 'sara@example.com', university: 'AUC', status: 'Active' as 'Active' | 'Pending', joined: '2024-09-15' },
+    { id: 3, name: 'Omar Ali', email: 'omar@example.com', university: 'Ain Shams', status: 'Pending' as 'Active' | 'Pending', joined: '2024-10-01' },
+  ]);
+  const [isAddStudentOpen, setIsAddStudentOpen] = useState(false);
+  const [isEditStudentOpen, setIsEditStudentOpen] = useState(false);
+  const [editingStudent, setEditingStudent] = useState<typeof students[0] | null>(null);
+  const [deleteStudentId, setDeleteStudentId] = useState<number | null>(null);
+  const [studentFormData, setStudentFormData] = useState({
+    name: '',
+    email: '',
+    university: '',
+    status: 'Active' as 'Active' | 'Pending',
+    joined: '',
+  });
 
   // Form state
   const [formData, setFormData] = useState({
@@ -157,6 +176,7 @@ export function AdminDashboard() {
 
   const handleEditClick = (university: University) => {
     setEditingUniversity(university);
+    setIsEditUniversityOpen(true);
     setFormData({
       name: university.name,
       arabicName: university.arabicName,
@@ -195,6 +215,7 @@ export function AdminDashboard() {
     updateUniversity(editingUniversity.id, updatedUniversity);
     resetForm();
     setEditingUniversity(null);
+    setIsEditUniversityOpen(false);
   };
 
   const handleDeleteClick = (id: number) => {
@@ -208,11 +229,75 @@ export function AdminDashboard() {
     }
   };
 
-  const students = [
-    { id: 1, name: 'Ahmed Hassan', email: 'ahmed@example.com', university: 'Cairo University', status: 'Active', joined: '2024-09-01' },
-    { id: 2, name: 'Sara Mohamed', email: 'sara@example.com', university: 'AUC', status: 'Active', joined: '2024-09-15' },
-    { id: 3, name: 'Omar Ali', email: 'omar@example.com', university: 'Ain Shams', status: 'Pending', joined: '2024-10-01' },
-  ];
+  // Student handlers
+  const resetStudentForm = () => {
+    setStudentFormData({
+      name: '',
+      email: '',
+      university: '',
+      status: 'Active',
+      joined: '',
+    });
+  };
+
+  const handleAddStudent = () => {
+    const newId = Math.max(...students.map(s => s.id), 0) + 1;
+    const newStudent = {
+      id: newId,
+      name: studentFormData.name,
+      email: studentFormData.email,
+      university: studentFormData.university,
+      status: studentFormData.status,
+      joined: studentFormData.joined || new Date().toISOString().split('T')[0],
+    };
+    setStudents([...students, newStudent]);
+    resetStudentForm();
+    setIsAddStudentOpen(false);
+  };
+
+  const handleEditStudentClick = (student: typeof students[0]) => {
+    setEditingStudent(student);
+    setIsEditStudentOpen(true);
+    setStudentFormData({
+      name: student.name,
+      email: student.email,
+      university: student.university,
+      status: student.status,
+      joined: student.joined,
+    });
+  };
+
+  const handleUpdateStudent = () => {
+    if (!editingStudent) return;
+    
+    const updatedStudents = students.map(s =>
+      s.id === editingStudent.id
+        ? {
+            ...s,
+            name: studentFormData.name,
+            email: studentFormData.email,
+            university: studentFormData.university,
+            status: studentFormData.status,
+            joined: studentFormData.joined,
+          }
+        : s
+    );
+    setStudents(updatedStudents);
+    resetStudentForm();
+    setEditingStudent(null);
+    setIsEditStudentOpen(false);
+  };
+
+  const handleDeleteStudentClick = (id: number) => {
+    setDeleteStudentId(id);
+  };
+
+  const handleDeleteStudentConfirm = () => {
+    if (deleteStudentId) {
+      setStudents(students.filter(s => s.id !== deleteStudentId));
+      setDeleteStudentId(null);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -419,14 +504,18 @@ export function AdminDashboard() {
                           />
                         </div>
                         <div className="flex justify-end gap-3">
-                          <Button variant="outline" onClick={() => {
-                            setIsAddUniversityOpen(false);
-                            resetForm();
-                          }}>
+                          <Button 
+                            variant="outline" 
+                            onClick={() => {
+                              setIsAddUniversityOpen(false);
+                              resetForm();
+                            }}
+                            className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                          >
                             Cancel
                           </Button>
                           <Button 
-                            className="bg-gradient-to-r from-blue-900 to-emerald-600"
+                            className="bg-gradient-to-r from-blue-900 to-emerald-600 hover:from-blue-800 hover:to-emerald-500 transition-colors"
                             onClick={handleAddUniversity}
                             disabled={!formData.name || !formData.arabicName || !formData.city}
                           >
@@ -485,7 +574,13 @@ export function AdminDashboard() {
                           </TableCell>
                           <TableCell className="text-right">
                             <div className="flex items-center justify-end gap-2">
-                              <Dialog>
+                              <Dialog open={isEditUniversityOpen && editingUniversity?.id === uni.id} onOpenChange={(open) => {
+                                if (!open) {
+                                  setIsEditUniversityOpen(false);
+                                  setEditingUniversity(null);
+                                  resetForm();
+                                }
+                              }}>
                                 <DialogTrigger asChild>
                                   <Button 
                                     variant="ghost" 
@@ -617,14 +712,16 @@ export function AdminDashboard() {
                                       <Button 
                                         variant="outline" 
                                         onClick={() => {
+                                          setIsEditUniversityOpen(false);
                                           setEditingUniversity(null);
                                           resetForm();
                                         }}
+                                        className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                                       >
                                         Cancel
                                       </Button>
                                       <Button 
-                                        className="bg-gradient-to-r from-blue-900 to-emerald-600"
+                                        className="bg-gradient-to-r from-blue-900 to-emerald-600 hover:from-blue-800 hover:to-emerald-500 transition-colors"
                                         onClick={handleUpdateUniversity}
                                         disabled={!formData.name || !formData.arabicName || !formData.city}
                                       >
@@ -659,10 +756,99 @@ export function AdminDashboard() {
               <div className="p-6 border-b border-border">
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl text-foreground">Student Profiles</h2>
-                  <Button className="bg-gradient-to-r from-blue-900 to-emerald-600 hover:from-blue-800 hover:to-emerald-500">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Student
-                  </Button>
+                  <Dialog open={isAddStudentOpen} onOpenChange={setIsAddStudentOpen}>
+                    <DialogTrigger asChild>
+                      <Button 
+                        className="bg-gradient-to-r from-blue-900 to-emerald-600 hover:from-blue-800 hover:to-emerald-500 transition-colors"
+                        onClick={() => {
+                          resetStudentForm();
+                          setEditingStudent(null);
+                        }}
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add Student
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl">
+                      <DialogHeader>
+                        <DialogTitle>Add New Student</DialogTitle>
+                        <DialogDescription>
+                          Fill in the details to add a new student to the platform
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4 py-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label>Name *</Label>
+                            <Input 
+                              placeholder="e.g., Ahmed Hassan" 
+                              value={studentFormData.name}
+                              onChange={(e) => setStudentFormData({...studentFormData, name: e.target.value})}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Email *</Label>
+                            <Input 
+                              type="email"
+                              placeholder="e.g., ahmed@example.com" 
+                              value={studentFormData.email}
+                              onChange={(e) => setStudentFormData({...studentFormData, email: e.target.value})}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label>University *</Label>
+                            <Input 
+                              placeholder="e.g., Cairo University" 
+                              value={studentFormData.university}
+                              onChange={(e) => setStudentFormData({...studentFormData, university: e.target.value})}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Status *</Label>
+                            <Select 
+                              value={studentFormData.status} 
+                              onValueChange={(value: 'Active' | 'Pending') => setStudentFormData({...studentFormData, status: value})}
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Active">Active</SelectItem>
+                                <SelectItem value="Pending">Pending</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Joined Date</Label>
+                            <Input 
+                              type="date"
+                              value={studentFormData.joined}
+                              onChange={(e) => setStudentFormData({...studentFormData, joined: e.target.value})}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex justify-end gap-3">
+                          <Button 
+                            variant="outline" 
+                            onClick={() => {
+                              setIsAddStudentOpen(false);
+                              resetStudentForm();
+                            }}
+                            className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                          >
+                            Cancel
+                          </Button>
+                          <Button 
+                            className="bg-gradient-to-r from-blue-900 to-emerald-600 hover:from-blue-800 hover:to-emerald-500 transition-colors"
+                            onClick={handleAddStudent}
+                            disabled={!studentFormData.name || !studentFormData.email || !studentFormData.university}
+                          >
+                            Add Student
+                          </Button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </div>
               <div className="overflow-x-auto">
@@ -678,29 +864,137 @@ export function AdminDashboard() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {students.map((student) => (
-                      <TableRow key={student.id}>
-                        <TableCell className="text-foreground">{student.name}</TableCell>
-                        <TableCell className="text-foreground">{student.email}</TableCell>
-                        <TableCell className="text-foreground">{student.university}</TableCell>
-                        <TableCell>
-                          <Badge className={student.status === 'Active' ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-700 border' : 'bg-orange-100 dark:bg-orange-900/50 text-orange-800 dark:text-orange-300 border-orange-200 dark:border-orange-700 border'}>
-                            {student.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-foreground">{student.joined}</TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex items-center justify-end gap-2">
-                            <Button variant="ghost" size="sm">
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="sm" className="text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20">
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
+                    {students.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
+                          No students found
                         </TableCell>
                       </TableRow>
-                    ))}
+                    ) : (
+                      students.map((student) => (
+                        <TableRow key={student.id}>
+                          <TableCell className="text-foreground">{student.name}</TableCell>
+                          <TableCell className="text-foreground">{student.email}</TableCell>
+                          <TableCell className="text-foreground">{student.university}</TableCell>
+                          <TableCell>
+                            <Badge className={student.status === 'Active' ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-700 border' : 'bg-orange-100 dark:bg-orange-900/50 text-orange-800 dark:text-orange-300 border-orange-200 dark:border-orange-700 border'}>
+                              {student.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-foreground">{student.joined}</TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              <Dialog open={isEditStudentOpen && editingStudent?.id === student.id} onOpenChange={(open) => {
+                                if (!open) {
+                                  setIsEditStudentOpen(false);
+                                  setEditingStudent(null);
+                                  resetStudentForm();
+                                }
+                              }}>
+                                <DialogTrigger asChild>
+                                  <Button 
+                                    variant="ghost" 
+                                    size="sm"
+                                    onClick={() => handleEditStudentClick(student)}
+                                    className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                  >
+                                    <Edit className="h-4 w-4" />
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="max-w-2xl">
+                                  <DialogHeader>
+                                    <DialogTitle>Edit Student</DialogTitle>
+                                    <DialogDescription>
+                                      Update the student information
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div className="space-y-4 py-4">
+                                    <div className="grid grid-cols-2 gap-4">
+                                      <div className="space-y-2">
+                                        <Label>Name *</Label>
+                                        <Input 
+                                          placeholder="e.g., Ahmed Hassan" 
+                                          value={studentFormData.name}
+                                          onChange={(e) => setStudentFormData({...studentFormData, name: e.target.value})}
+                                        />
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label>Email *</Label>
+                                        <Input 
+                                          type="email"
+                                          placeholder="e.g., ahmed@example.com" 
+                                          value={studentFormData.email}
+                                          onChange={(e) => setStudentFormData({...studentFormData, email: e.target.value})}
+                                        />
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label>University *</Label>
+                                        <Input 
+                                          placeholder="e.g., Cairo University" 
+                                          value={studentFormData.university}
+                                          onChange={(e) => setStudentFormData({...studentFormData, university: e.target.value})}
+                                        />
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label>Status *</Label>
+                                        <Select 
+                                          value={studentFormData.status} 
+                                          onValueChange={(value: 'Active' | 'Pending') => setStudentFormData({...studentFormData, status: value})}
+                                        >
+                                          <SelectTrigger>
+                                            <SelectValue />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="Active">Active</SelectItem>
+                                            <SelectItem value="Pending">Pending</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label>Joined Date</Label>
+                                        <Input 
+                                          type="date"
+                                          value={studentFormData.joined}
+                                          onChange={(e) => setStudentFormData({...studentFormData, joined: e.target.value})}
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="flex justify-end gap-3">
+                                      <Button 
+                                        variant="outline" 
+                                        onClick={() => {
+                                          setIsEditStudentOpen(false);
+                                          setEditingStudent(null);
+                                          resetStudentForm();
+                                        }}
+                                        className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                      >
+                                        Cancel
+                                      </Button>
+                                      <Button 
+                                        className="bg-gradient-to-r from-blue-900 to-emerald-600 hover:from-blue-800 hover:to-emerald-500 transition-colors"
+                                        onClick={handleUpdateStudent}
+                                        disabled={!studentFormData.name || !studentFormData.email || !studentFormData.university}
+                                      >
+                                        Update Student
+                                      </Button>
+                                    </div>
+                                  </div>
+                                </DialogContent>
+                              </Dialog>
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                className="text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                                onClick={() => handleDeleteStudentClick(student.id)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
                   </TableBody>
                 </Table>
               </div>
@@ -738,23 +1032,69 @@ export function AdminDashboard() {
         </Tabs>
       </div>
 
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog open={deleteUniversityId !== null} onOpenChange={() => setDeleteUniversityId(null)}>
+      {/* Delete University Confirmation Dialog */}
+      <AlertDialog open={deleteUniversityId !== null} onOpenChange={(open) => {
+        if (!open) {
+          setDeleteUniversityId(null);
+        }
+      }}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>Delete University</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the university
-              {deleteUniversityId && ` "${universities.find(u => u.id === deleteUniversityId)?.name}"`} from the system.
+              Are you sure you want to delete{" "}
+              <span className="font-semibold text-foreground">
+                {deleteUniversityId && universities.find(u => u.id === deleteUniversityId)?.name}
+              </span>
+              ? This action cannot be undone and will permanently remove the university from the system.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setDeleteUniversityId(null)}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel 
+              onClick={() => setDeleteUniversityId(null)}
+              className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleDeleteConfirm}
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-red-600 hover:bg-red-700 dark:hover:bg-red-800 text-white focus:ring-red-600 transition-colors"
             >
-              Delete
+              Delete University
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Delete Student Confirmation Dialog */}
+      <AlertDialog open={deleteStudentId !== null} onOpenChange={(open) => {
+        if (!open) {
+          setDeleteStudentId(null);
+        }
+      }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Student</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete{" "}
+              <span className="font-semibold text-foreground">
+                {deleteStudentId && students.find(s => s.id === deleteStudentId)?.name}
+              </span>
+              {" "}({deleteStudentId && students.find(s => s.id === deleteStudentId)?.email})? This action cannot be undone and will permanently remove the student from the system.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel 
+              onClick={() => setDeleteStudentId(null)}
+              className="hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleDeleteStudentConfirm}
+              className="bg-red-600 hover:bg-red-700 dark:hover:bg-red-800 text-white focus:ring-red-600 transition-colors"
+            >
+              Delete Student
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
