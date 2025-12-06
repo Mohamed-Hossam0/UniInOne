@@ -7,10 +7,11 @@ import { Badge } from './ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Search, MapPin, Users, Star, Calendar, Filter, ExternalLink } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { universities } from '../data/universities';
+import { useUniversities } from '../context/UniversitiesContext';
 
 export function UniversitiesPage() {
   const navigate = useNavigate();
+  const { universities } = useUniversities();
   const [searchQuery, setSearchQuery] = useState('');
   const [cityFilter, setCityFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');

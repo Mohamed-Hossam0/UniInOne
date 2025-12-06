@@ -38,9 +38,9 @@ export function Header() {
             className="flex items-center cursor-pointer hover:opacity-80 transition-opacity"
           >
             <img 
-              src="/logo.svg" 
+              src="/UniInOneLogo.jpg" 
               alt="UniInOne Logo" 
-              className="w-12 h-12 mr-2"
+              className="w-12 h-12 mr-2 rounded-full object-cover"
             />
             <span className="text-xl font-bold text-foreground">UniInOne</span>
           </Link>

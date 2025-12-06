@@ -22,11 +22,12 @@ import {
   UserCheck
 } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { getUniversityById } from '../data/universities';
+import { useUniversities } from '../context/UniversitiesContext';
 
 export function UniversityDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { getUniversityById } = useUniversities();
   const university = id ? getUniversityById(parseInt(id)) : undefined;
   const [activeTab, setActiveTab] = useState('overview');
 
