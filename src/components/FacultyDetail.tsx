@@ -42,7 +42,7 @@ export function FacultyDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 hover:from-blue-100 hover:via-emerald-50 hover:to-emerald-100 transition-all duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
         <Button
@@ -132,70 +132,54 @@ export function FacultyDetail() {
 
         {/* Tabs Section */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-          <TabsList className="flex flex-row w-full bg-white/90 backdrop-blur-sm rounded-xl p-1.5 shadow-lg border border-gray-200/50 gap-1">
+          <TabsList className="flex flex-row w-full bg-gradient-to-r from-white/95 via-white/92 to-white/90 backdrop-blur-md rounded-2xl p-2 shadow-xl border border-gray-100/50 gap-2 hover:from-blue-50/80 hover:via-white/95 hover:to-emerald-50/80 hover:shadow-2xl hover:border-blue-200/50 transition-all duration-300">
             <TabsTrigger 
               value="overview" 
-              className="flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 ease-in-out relative overflow-hidden
-                data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-emerald-600 
-                data-[state=active]:text-white data-[state=active]:shadow-md data-[state=active]:shadow-blue-900/30
-                data-[state=active]:scale-105 data-[state=active]:hover:scale-110 data-[state=active]:hover:shadow-lg
-                data-[state=inactive]:text-gray-600 data-[state=inactive]:hover:text-blue-900 
-                data-[state=inactive]:hover:bg-gradient-to-r data-[state=inactive]:hover:from-blue-50 data-[state=inactive]:hover:to-emerald-50
-                data-[state=inactive]:hover:scale-[1.02] data-[state=inactive]:hover:shadow-md data-[state=inactive]:hover:border-blue-200
-                data-[state=inactive]:border data-[state=inactive]:border-transparent
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
-                before:absolute before:inset-0 before:bg-gradient-to-r before:from-blue-400/0 before:to-emerald-400/0 
-                before:transition-all before:duration-300 data-[state=inactive]:hover:before:from-blue-400/10 data-[state=inactive]:hover:before:to-emerald-400/10"
+              className={`flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ease-in-out relative overflow-hidden group
+                ${activeTab === 'overview' 
+                  ? 'bg-gradient-to-br from-blue-600 via-blue-700 to-emerald-600 text-white shadow-xl shadow-blue-500/40 scale-105' 
+                  : 'text-gray-700 hover:bg-gradient-to-br hover:from-blue-100 hover:via-blue-50 hover:to-emerald-100 hover:text-blue-900 hover:scale-105 hover:shadow-lg hover:shadow-blue-200/50'}`}
             >
-              <span className="relative z-10">Overview</span>
+              <span className="relative z-10 flex items-center gap-2">
+                <BookOpen className="h-4 w-4" />
+                Overview
+              </span>
             </TabsTrigger>
             <TabsTrigger 
               value="departments" 
-              className="flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 ease-in-out relative overflow-hidden
-                data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-emerald-600 
-                data-[state=active]:text-white data-[state=active]:shadow-md data-[state=active]:shadow-blue-900/30
-                data-[state=active]:scale-105 data-[state=active]:hover:scale-110 data-[state=active]:hover:shadow-lg
-                data-[state=inactive]:text-gray-600 data-[state=inactive]:hover:text-blue-900 
-                data-[state=inactive]:hover:bg-gradient-to-r data-[state=inactive]:hover:from-blue-50 data-[state=inactive]:hover:to-emerald-50
-                data-[state=inactive]:hover:scale-[1.02] data-[state=inactive]:hover:shadow-md data-[state=inactive]:hover:border-blue-200
-                data-[state=inactive]:border data-[state=inactive]:border-transparent
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
-                before:absolute before:inset-0 before:bg-gradient-to-r before:from-blue-400/0 before:to-emerald-400/0 
-                before:transition-all before:duration-300 data-[state=inactive]:hover:before:from-blue-400/10 data-[state=inactive]:hover:before:to-emerald-400/10"
+              className={`flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ease-in-out relative overflow-hidden group
+                ${activeTab === 'departments' 
+                  ? 'bg-gradient-to-br from-blue-600 via-blue-700 to-emerald-600 text-white shadow-xl shadow-blue-500/40 scale-105' 
+                  : 'text-gray-700 hover:bg-gradient-to-br hover:from-blue-100 hover:via-blue-50 hover:to-emerald-100 hover:text-blue-900 hover:scale-105 hover:shadow-lg hover:shadow-blue-200/50'}`}
             >
-              <span className="relative z-10">Departments</span>
+              <span className="relative z-10 flex items-center gap-2">
+                <Building2 className="h-4 w-4" />
+                Departments
+              </span>
             </TabsTrigger>
             <TabsTrigger 
               value="universities" 
-              className="flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 ease-in-out relative overflow-hidden
-                data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-emerald-600 
-                data-[state=active]:text-white data-[state=active]:shadow-md data-[state=active]:shadow-blue-900/30
-                data-[state=active]:scale-105 data-[state=active]:hover:scale-110 data-[state=active]:hover:shadow-lg
-                data-[state=inactive]:text-gray-600 data-[state=inactive]:hover:text-blue-900 
-                data-[state=inactive]:hover:bg-gradient-to-r data-[state=inactive]:hover:from-blue-50 data-[state=inactive]:hover:to-emerald-50
-                data-[state=inactive]:hover:scale-[1.02] data-[state=inactive]:hover:shadow-md data-[state=inactive]:hover:border-blue-200
-                data-[state=inactive]:border data-[state=inactive]:border-transparent
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
-                before:absolute before:inset-0 before:bg-gradient-to-r before:from-blue-400/0 before:to-emerald-400/0 
-                before:transition-all before:duration-300 data-[state=inactive]:hover:before:from-blue-400/10 data-[state=inactive]:hover:before:to-emerald-400/10"
+              className={`flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ease-in-out relative overflow-hidden group
+                ${activeTab === 'universities' 
+                  ? 'bg-gradient-to-br from-blue-600 via-blue-700 to-emerald-600 text-white shadow-xl shadow-blue-500/40 scale-105' 
+                  : 'text-gray-700 hover:bg-gradient-to-br hover:from-blue-100 hover:via-blue-50 hover:to-emerald-100 hover:text-blue-900 hover:scale-105 hover:shadow-lg hover:shadow-blue-200/50'}`}
             >
-              <span className="relative z-10">Universities</span>
+              <span className="relative z-10 flex items-center gap-2">
+                <Award className="h-4 w-4" />
+                Universities
+              </span>
             </TabsTrigger>
             <TabsTrigger 
               value="careers" 
-              className="flex-1 px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-300 ease-in-out relative overflow-hidden
-                data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-900 data-[state=active]:to-emerald-600 
-                data-[state=active]:text-white data-[state=active]:shadow-md data-[state=active]:shadow-blue-900/30
-                data-[state=active]:scale-105 data-[state=active]:hover:scale-110 data-[state=active]:hover:shadow-lg
-                data-[state=inactive]:text-gray-600 data-[state=inactive]:hover:text-blue-900 
-                data-[state=inactive]:hover:bg-gradient-to-r data-[state=inactive]:hover:from-blue-50 data-[state=inactive]:hover:to-emerald-50
-                data-[state=inactive]:hover:scale-[1.02] data-[state=inactive]:hover:shadow-md data-[state=inactive]:hover:border-blue-200
-                data-[state=inactive]:border data-[state=inactive]:border-transparent
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
-                before:absolute before:inset-0 before:bg-gradient-to-r before:from-blue-400/0 before:to-emerald-400/0 
-                before:transition-all before:duration-300 data-[state=inactive]:hover:before:from-blue-400/10 data-[state=inactive]:hover:before:to-emerald-400/10"
+              className={`flex-1 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ease-in-out relative overflow-hidden group
+                ${activeTab === 'careers' 
+                  ? 'bg-gradient-to-br from-blue-600 via-blue-700 to-emerald-600 text-white shadow-xl shadow-blue-500/40 scale-105' 
+                  : 'text-gray-700 hover:bg-gradient-to-br hover:from-blue-100 hover:via-blue-50 hover:to-emerald-100 hover:text-blue-900 hover:scale-105 hover:shadow-lg hover:shadow-blue-200/50'}`}
             >
-              <span className="relative z-10">Careers</span>
+              <span className="relative z-10 flex items-center gap-2">
+                <Briefcase className="h-4 w-4" />
+                Careers
+              </span>
             </TabsTrigger>
           </TabsList>
 
@@ -255,10 +239,10 @@ export function FacultyDetail() {
                   {faculty.departments.map((dept, index) => (
                     <div
                       key={index}
-                      className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                      className="flex items-center gap-2 p-3 bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg border border-blue-200/50 hover:from-blue-100 hover:to-blue-200 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-200/40 transition-all duration-300 hover:scale-105 cursor-pointer group"
                     >
-                      <CheckCircle2 className="h-4 w-4 text-emerald-600 flex-shrink-0" />
-                      <span className="text-gray-700">{dept}</span>
+                      <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 group-hover:text-blue-700 transition-colors" />
+                      <span className="text-gray-700 group-hover:text-blue-900 font-medium transition-colors">{dept}</span>
                     </div>
                   ))}
                 </div>
@@ -280,10 +264,10 @@ export function FacultyDetail() {
                   {faculty.universities.map((uni, index) => (
                     <div
                       key={index}
-                      className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-50 to-emerald-50 rounded-lg border border-blue-100 hover:border-blue-300 transition-colors"
+                      className="flex items-center gap-3 p-4 bg-gradient-to-r from-blue-50 via-emerald-50/50 to-emerald-100 rounded-lg border border-emerald-200/60 hover:from-blue-100 hover:via-emerald-100 hover:to-emerald-200 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-200/50 transition-all duration-300 hover:scale-105 cursor-pointer group"
                     >
-                      <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
-                      <span className="text-gray-900 font-medium">{uni}</span>
+                      <div className="w-2.5 h-2.5 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-full group-hover:scale-125 transition-transform"></div>
+                      <span className="text-gray-900 font-medium group-hover:text-emerald-900 transition-colors">{uni}</span>
                     </div>
                   ))}
                 </div>
@@ -305,10 +289,10 @@ export function FacultyDetail() {
                   {faculty.careerProspects.map((career, index) => (
                     <div
                       key={index}
-                      className="flex items-center gap-3 p-4 bg-emerald-50 rounded-lg border border-emerald-100 hover:border-emerald-300 transition-colors"
+                      className="flex items-center gap-3 p-4 bg-gradient-to-br from-emerald-50 to-emerald-100/60 rounded-lg border border-emerald-200/60 hover:from-emerald-100 hover:to-emerald-200 hover:border-emerald-400 hover:shadow-lg hover:shadow-emerald-300/40 transition-all duration-300 hover:scale-105 cursor-pointer group"
                     >
-                      <Award className="h-5 w-5 text-emerald-600 flex-shrink-0" />
-                      <span className="text-gray-900 font-medium">{career}</span>
+                      <Award className="h-5 w-5 text-emerald-600 flex-shrink-0 group-hover:text-emerald-700 transition-colors group-hover:scale-110" />
+                      <span className="text-gray-900 font-medium group-hover:text-emerald-900 transition-colors">{career}</span>
                     </div>
                   ))}
                 </div>

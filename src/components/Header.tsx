@@ -33,11 +33,13 @@ export function Header() {
           {/* Logo */}
           <Link 
             to="/"
-            className="flex items-center cursor-pointer"
+            className="flex items-center cursor-pointer hover:opacity-80 transition-opacity"
           >
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-900 to-emerald-600 rounded-lg flex items-center justify-center mr-3">
-              <span className="text-white text-sm font-bold">U</span>
-            </div>
+            <img 
+              src="/logo.svg" 
+              alt="UniInOne Logo" 
+              className="w-12 h-12 mr-2"
+            />
             <span className="text-xl font-bold text-gray-900">UniInOne</span>
           </Link>
 
