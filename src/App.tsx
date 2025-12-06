@@ -16,13 +16,15 @@ import { Footer } from './components/Footer';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { UniversitiesProvider } from './context/UniversitiesContext';
 
 export default function App() {
   return (
     <BrowserRouter>
       <ThemeProvider>
         <AuthProvider>
-          <div className="min-h-screen bg-background">
+          <UniversitiesProvider>
+            <div className="min-h-screen bg-background">
             <Header />
             <main>
               <Routes>
@@ -57,6 +59,7 @@ export default function App() {
             </main>
             <Footer />
           </div>
+          </UniversitiesProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
