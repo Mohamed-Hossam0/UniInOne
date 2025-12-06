@@ -61,7 +61,7 @@ export function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-emerald-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <motion.div
@@ -70,12 +70,12 @@ export function AdminDashboard() {
           className="mb-8"
         >
           <div className="flex items-center justify-between mb-2">
-            <h1 className="text-4xl text-gray-900">Admin Dashboard</h1>
+            <h1 className="text-4xl text-foreground">Admin Dashboard</h1>
             <Badge className="bg-gradient-to-r from-blue-900 to-emerald-600 text-white border-0">
               Administrator
             </Badge>
           </div>
-          <p className="text-gray-600">Manage universities, students, and platform content</p>
+          <p className="text-muted-foreground">Manage universities, students, and platform content</p>
         </motion.div>
 
         {/* Stats Grid */}
@@ -87,11 +87,11 @@ export function AdminDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="p-6 shadow-lg border-0 bg-white/80 backdrop-blur-sm hover:shadow-xl transition-shadow">
+              <Card className="p-6 shadow-lg border border-border bg-card hover:shadow-xl transition-shadow">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
-                    <p className="text-3xl text-gray-900">{stat.value}</p>
+                    <p className="text-sm text-muted-foreground mb-1">{stat.label}</p>
+                    <p className="text-3xl text-foreground">{stat.value}</p>
                   </div>
                   <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
                     <stat.icon className="h-6 w-6 text-white" />
@@ -104,7 +104,7 @@ export function AdminDashboard() {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="universities" className="space-y-6">
-          <TabsList className="bg-white/80 backdrop-blur-sm shadow-sm border-0">
+          <TabsList className="bg-card shadow-sm border border-border">
             <TabsTrigger value="universities" className="gap-2">
               <Building2 className="h-4 w-4" />
               Universities
@@ -121,11 +121,11 @@ export function AdminDashboard() {
 
           {/* Universities Tab */}
           <TabsContent value="universities">
-            <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-              <div className="p-6 border-b">
+            <Card className="shadow-lg border border-border bg-card">
+              <div className="p-6 border-b border-border">
                 <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                   <div className="relative flex-1 max-w-md">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       placeholder="Search universities..."
                       value={searchQuery}
@@ -212,17 +212,17 @@ export function AdminDashboard() {
                             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-900 to-emerald-600 flex items-center justify-center">
                               <GraduationCap className="h-5 w-5 text-white" />
                             </div>
-                            <span>{uni.name}</span>
+                            <span className="text-foreground">{uni.name}</span>
                           </div>
                         </TableCell>
-                        <TableCell>{uni.city}</TableCell>
+                        <TableCell className="text-foreground">{uni.city}</TableCell>
                         <TableCell>
-                          <Badge variant="outline">{uni.type}</Badge>
+                          <Badge variant="outline" className="border-border">{uni.type}</Badge>
                         </TableCell>
-                        <TableCell>{uni.students.toLocaleString()}</TableCell>
-                        <TableCell>{uni.programs}</TableCell>
+                        <TableCell className="text-foreground">{uni.students.toLocaleString()}</TableCell>
+                        <TableCell className="text-foreground">{uni.programs}</TableCell>
                         <TableCell>
-                          <Badge className="bg-emerald-100 text-emerald-800 border-emerald-200">
+                          <Badge className="bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-700 border">
                             {uni.status}
                           </Badge>
                         </TableCell>
@@ -231,7 +231,7 @@ export function AdminDashboard() {
                             <Button variant="ghost" size="sm">
                               <Edit className="h-4 w-4" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="text-red-500 hover:text-red-600 hover:bg-red-50">
+                            <Button variant="ghost" size="sm" className="text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20">
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
@@ -246,10 +246,10 @@ export function AdminDashboard() {
 
           {/* Students Tab */}
           <TabsContent value="students">
-            <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-              <div className="p-6 border-b">
+            <Card className="shadow-lg border border-border bg-card">
+              <div className="p-6 border-b border-border">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-2xl text-gray-900">Student Profiles</h2>
+                  <h2 className="text-2xl text-foreground">Student Profiles</h2>
                   <Button className="bg-gradient-to-r from-blue-900 to-emerald-600 hover:from-blue-800 hover:to-emerald-500">
                     <Plus className="h-4 w-4 mr-2" />
                     Add Student
@@ -271,21 +271,21 @@ export function AdminDashboard() {
                   <TableBody>
                     {students.map((student) => (
                       <TableRow key={student.id}>
-                        <TableCell>{student.name}</TableCell>
-                        <TableCell>{student.email}</TableCell>
-                        <TableCell>{student.university}</TableCell>
+                        <TableCell className="text-foreground">{student.name}</TableCell>
+                        <TableCell className="text-foreground">{student.email}</TableCell>
+                        <TableCell className="text-foreground">{student.university}</TableCell>
                         <TableCell>
-                          <Badge className={student.status === 'Active' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-orange-100 text-orange-800 border-orange-200'}>
+                          <Badge className={student.status === 'Active' ? 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-700 border' : 'bg-orange-100 dark:bg-orange-900/50 text-orange-800 dark:text-orange-300 border-orange-200 dark:border-orange-700 border'}>
                             {student.status}
                           </Badge>
                         </TableCell>
-                        <TableCell>{student.joined}</TableCell>
+                        <TableCell className="text-foreground">{student.joined}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-2">
                             <Button variant="ghost" size="sm">
                               <Edit className="h-4 w-4" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="text-red-500 hover:text-red-600 hover:bg-red-50">
+                            <Button variant="ghost" size="sm" className="text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20">
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
@@ -300,28 +300,28 @@ export function AdminDashboard() {
 
           {/* Analytics Tab */}
           <TabsContent value="analytics">
-            <Card className="p-8 shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-              <h2 className="text-2xl text-gray-900 mb-6">Platform Analytics</h2>
+            <Card className="p-8 shadow-lg border border-border bg-card">
+              <h2 className="text-2xl text-foreground mb-6">Platform Analytics</h2>
               <div className="grid md:grid-cols-2 gap-6">
-                <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
-                  <h3 className="text-lg text-gray-900 mb-2">User Engagement</h3>
-                  <p className="text-3xl text-blue-900 mb-2">89%</p>
-                  <p className="text-sm text-gray-600">Active users this month</p>
+                <div className="p-6 bg-gradient-to-br from-blue-100 dark:from-blue-900/50 to-blue-200 dark:to-blue-800/50 rounded-lg border border-border">
+                  <h3 className="text-lg text-foreground mb-2">User Engagement</h3>
+                  <p className="text-3xl text-blue-900 dark:text-blue-400 mb-2">89%</p>
+                  <p className="text-sm text-muted-foreground">Active users this month</p>
                 </div>
-                <div className="p-6 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg">
-                  <h3 className="text-lg text-gray-900 mb-2">New Registrations</h3>
-                  <p className="text-3xl text-emerald-900 mb-2">127</p>
-                  <p className="text-sm text-gray-600">Students joined this month</p>
+                <div className="p-6 bg-gradient-to-br from-emerald-100 dark:from-emerald-900/50 to-emerald-200 dark:to-emerald-800/50 rounded-lg border border-border">
+                  <h3 className="text-lg text-foreground mb-2">New Registrations</h3>
+                  <p className="text-3xl text-emerald-900 dark:text-emerald-400 mb-2">127</p>
+                  <p className="text-sm text-muted-foreground">Students joined this month</p>
                 </div>
-                <div className="p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
-                  <h3 className="text-lg text-gray-900 mb-2">University Views</h3>
-                  <p className="text-3xl text-purple-900 mb-2">5,432</p>
-                  <p className="text-sm text-gray-600">Total page views</p>
+                <div className="p-6 bg-gradient-to-br from-purple-100 dark:from-purple-900/50 to-purple-200 dark:to-purple-800/50 rounded-lg border border-border">
+                  <h3 className="text-lg text-foreground mb-2">University Views</h3>
+                  <p className="text-3xl text-purple-900 dark:text-purple-400 mb-2">5,432</p>
+                  <p className="text-sm text-muted-foreground">Total page views</p>
                 </div>
-                <div className="p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg">
-                  <h3 className="text-lg text-gray-900 mb-2">Comparisons Made</h3>
-                  <p className="text-3xl text-orange-900 mb-2">892</p>
-                  <p className="text-sm text-gray-600">Universities compared</p>
+                <div className="p-6 bg-gradient-to-br from-orange-100 dark:from-orange-900/50 to-orange-200 dark:to-orange-800/50 rounded-lg border border-border">
+                  <h3 className="text-lg text-foreground mb-2">Comparisons Made</h3>
+                  <p className="text-3xl text-orange-900 dark:text-orange-400 mb-2">892</p>
+                  <p className="text-sm text-muted-foreground">Universities compared</p>
                 </div>
               </div>
             </Card>
