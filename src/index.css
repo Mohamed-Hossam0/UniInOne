@@ -1573,6 +1573,10 @@
     background-color: var(--muted);
   }
 
+  .bg-muted-tab-bg {
+    background-color: var(--muted-tab-bg);
+  }
+
   .bg-muted\/50 {
     background-color: var(--muted);
   }
