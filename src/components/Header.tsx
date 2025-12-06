@@ -4,7 +4,6 @@ import { Button } from './ui/button';
 import { Globe, Menu, X, User, LogIn, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { useAuth } from '../context/AuthContext';
-import { ThemeToggle } from './ThemeToggle';
 
 export function Header() {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ export function Header() {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 transition-colors duration-300">
+    <header className="bg-white shadow-sm border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -41,7 +40,7 @@ export function Header() {
               alt="UniInOne Logo" 
               className="w-12 h-12 mr-2"
             />
-            <span className="text-xl font-bold text-gray-900 dark:text-white transition-colors">UniInOne</span>
+            <span className="text-xl font-bold text-gray-900">UniInOne</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -52,8 +51,8 @@ export function Header() {
                 to={item.path}
                 className={`px-3 py-2 rounded-md transition-colors ${
                   location.pathname === item.path
-                    ? 'text-blue-900 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                    ? 'text-blue-900 bg-blue-50'
+                    : 'text-gray-600 hover:text-blue-900 hover:bg-gray-50'
                 }`}
               >
                 {item.label}
@@ -62,8 +61,7 @@ export function Header() {
           </nav>
 
           {/* User Actions & Mobile Menu */}
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
+          <div className="flex items-center space-x-4">
             {isAuthenticated && user ? (
               <>
                 {user.role === 'admin' && (
@@ -85,13 +83,13 @@ export function Header() {
                       {user.name.split(' ').map(n => n[0]).join('')}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="text-sm text-gray-700 dark:text-gray-300">{user.name}</span>
+                  <span className="text-sm text-gray-700">{user.name}</span>
                 </div>
                 <Button
                   onClick={handleLogout}
                   variant="outline"
                   size="sm"
-                  className="hidden md:flex text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  className="hidden md:flex text-red-600 hover:text-red-700 hover:bg-red-50"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
                   Logout
@@ -109,7 +107,7 @@ export function Header() {
             )}
             
             <button
-              className="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+              className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -119,7 +117,7 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="md:hidden py-4 border-t">
             <nav className="flex flex-col space-y-2">
               {navigationItems.map((item) => (
                 <Link
@@ -128,8 +126,8 @@ export function Header() {
                   onClick={() => setIsMenuOpen(false)}
                   className={`px-3 py-2 rounded-md text-left transition-colors ${
                     location.pathname === item.path
-                      ? 'text-blue-900 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                      ? 'text-blue-900 bg-blue-50'
+                      : 'text-gray-600 hover:text-blue-900 hover:bg-gray-50'
                   }`}
                 >
                   {item.label}
@@ -142,7 +140,7 @@ export function Header() {
                       navigate('/profile');
                       setIsMenuOpen(false);
                     }}
-                    className="px-3 py-2 rounded-md text-left text-gray-600 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                    className="px-3 py-2 rounded-md text-left text-gray-600 hover:text-blue-900 hover:bg-gray-50 transition-colors"
                   >
                     Profile
                   </button>
@@ -152,14 +150,14 @@ export function Header() {
                         navigate('/admin-dashboard');
                         setIsMenuOpen(false);
                       }}
-                      className="px-3 py-2 rounded-md text-left text-gray-600 dark:text-gray-300 hover:text-blue-900 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                      className="px-3 py-2 rounded-md text-left text-gray-600 hover:text-blue-900 hover:bg-gray-50 transition-colors"
                     >
                       Dashboard
                     </button>
                   )}
                   <button
                     onClick={handleLogout}
-                    className="px-3 py-2 rounded-md text-left text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                    className="px-3 py-2 rounded-md text-left text-red-600 hover:bg-red-50 transition-colors"
                   >
                     Logout
                   </button>
@@ -170,7 +168,7 @@ export function Header() {
                     navigate('/login');
                     setIsMenuOpen(false);
                   }}
-                  className="px-3 py-2 rounded-md text-left text-blue-900 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                  className="px-3 py-2 rounded-md text-left text-blue-900 hover:bg-blue-50 transition-colors"
                 >
                   Login / Register
                 </button>

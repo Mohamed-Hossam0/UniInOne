@@ -15,16 +15,14 @@ import { ComparePage } from './components/ComparePage';
 import { Footer } from './components/Footer';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
-import { ThemeProvider } from './components/ThemeProvider';
 
 export default function App() {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-      <BrowserRouter>
-        <AuthProvider>
-          <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-            <Header />
-            <main>
+    <BrowserRouter>
+      <AuthProvider>
+        <div className="min-h-screen bg-white">
+          <Header />
+          <main>
             <Routes>
               <Route path="/" element={<Hero />} />
               <Route path="/universities" element={<UniversitiesPage />} />
@@ -59,4 +57,5 @@ export default function App() {
         </div>
       </AuthProvider>
     </BrowserRouter>
-    </ThemeProvider>
+  );
+}
