@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Separator } from './ui/separator';
@@ -63,31 +64,33 @@ export function Footer() {
   };
 
   const quickLinks = [
-    { label: 'Universities', href: '#universities' },
-    { label: 'Majors', href: '#majors' },
-    { label: 'Compare', href: '#compare' },
-    { label: 'International Students', href: '#international' },
-    { label: 'Scholarships', href: '#scholarships' },
-    { label: 'Student Life', href: '#student-life' }
+    { label: 'Universities', href: '/universities' },
+    { label: 'Faculties', href: '/faculties' },
+    { label: 'Compare', href: '/compare' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' }
   ];
 
   const resources = [
-    { label: 'Application Guide', href: '#guide' },
-    { label: 'Admission Calendar', href: '#calendar' },
-    { label: 'Tuition Calculator', href: '#calculator' },
-    { label: 'Career Center', href: '#careers' },
-    { label: 'Study Abroad', href: '#abroad' },
-    { label: 'Alumni Network', href: '#alumni' }
+    { label: 'Application Guide', href: '/about' },
+    { label: 'Universities', href: '/universities' },
+    { label: 'Faculties', href: '/faculties' },
+    { label: 'Compare Universities', href: '/compare' }
   ];
 
   const support = [
-    { label: 'Help Center', href: '#help' },
-    { label: 'Contact Us', href: '#contact' },
-    { label: 'FAQs', href: '#faq' },
-    { label: 'Technical Support', href: '#tech' },
-    { label: 'Privacy Policy', href: '#privacy' },
-    { label: 'Terms of Service', href: '#terms' }
+    { label: 'Contact Us', href: '/contact' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Privacy Policy', href: '/about' },
+    { label: 'Terms of Service', href: '/about' }
   ];
+
+  const socialMediaLinks = {
+    facebook: 'https://www.facebook.com',
+    twitter: 'https://www.twitter.com',
+    instagram: 'https://www.instagram.com',
+    linkedin: 'https://www.linkedin.com'
+  };
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -174,18 +177,46 @@ export function Footer() {
 
               {/* Social Media */}
               <div className="flex space-x-4">
-                <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
-                  <Facebook className="h-4 w-4" />
-                </Button>
-                <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
-                  <Twitter className="h-4 w-4" />
-                </Button>
-                <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
-                  <Instagram className="h-4 w-4" />
-                </Button>
-                <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
-                  <Linkedin className="h-4 w-4" />
-                </Button>
+                <a
+                  href={socialMediaLinks.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                >
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                    <Facebook className="h-4 w-4" />
+                  </Button>
+                </a>
+                <a
+                  href={socialMediaLinks.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Twitter"
+                >
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                    <Twitter className="h-4 w-4" />
+                  </Button>
+                </a>
+                <a
+                  href={socialMediaLinks.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                    <Instagram className="h-4 w-4" />
+                  </Button>
+                </a>
+                <a
+                  href={socialMediaLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                    <Linkedin className="h-4 w-4" />
+                  </Button>
+                </a>
               </div>
             </div>
 
@@ -195,12 +226,12 @@ export function Footer() {
               <ul className="space-y-2">
                 {quickLinks.map((link, index) => (
                   <li key={index}>
-                    <a 
-                      href={link.href} 
+                    <Link 
+                      to={link.href} 
                       className="text-gray-300 hover:text-white transition-colors text-sm"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -212,12 +243,12 @@ export function Footer() {
               <ul className="space-y-2">
                 {resources.map((resource, index) => (
                   <li key={index}>
-                    <a 
-                      href={resource.href} 
+                    <Link 
+                      to={resource.href} 
                       className="text-gray-300 hover:text-white transition-colors text-sm"
                     >
                       {resource.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -229,12 +260,12 @@ export function Footer() {
               <ul className="space-y-2">
                 {support.map((item, index) => (
                   <li key={index}>
-                    <a 
-                      href={item.href} 
+                    <Link 
+                      to={item.href} 
                       className="text-gray-300 hover:text-white transition-colors text-sm"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -260,15 +291,15 @@ export function Footer() {
               </div>
               
               <div className="flex space-x-4 text-sm">
-                <a href="#privacy" className="text-gray-400 hover:text-white transition-colors">
+                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
                   Privacy Policy
-                </a>
-                <a href="#terms" className="text-gray-400 hover:text-white transition-colors">
+                </Link>
+                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
                   Terms of Service
-                </a>
-                <a href="#cookies" className="text-gray-400 hover:text-white transition-colors">
+                </Link>
+                <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
                   Cookie Policy
-                </a>
+                </Link>
               </div>
             </div>
           </div>

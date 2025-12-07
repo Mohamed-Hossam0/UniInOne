@@ -12,53 +12,84 @@ import {
   MapPin, 
   Globe,
   Send,
-  CheckCircle
+  CheckCircle,
+  AlertCircle
 } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState('');
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubscribe = () => {
-    if (email.trim()) {
-      // Reset the input field
-      setEmail('');
-      // Show success message
-      setShowSuccess(true);
-      // Hide success message after 3 seconds
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 3000);
+    // Clear previous errors
+    setError('');
+    
+    // Check if email is empty
+    if (!email.trim()) {
+      setError('Please enter your email address');
+      return;
+    }
+
+    // Validate email format
+    if (!validateEmail(email.trim())) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    // If validation passes, proceed with subscription
+    // Reset the input field
+    setEmail('');
+    // Show success message
+    setShowSuccess(true);
+    // Hide success message after 3 seconds
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 3000);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    // Clear error when user starts typing
+    if (error) {
+      setError('');
     }
   };
 
   const quickLinks = [
-    { label: 'Universities', href: '#universities' },
-    { label: 'Majors', href: '#majors' },
-    { label: 'Compare', href: '#compare' },
-    { label: 'International Students', href: '#international' },
-    { label: 'Scholarships', href: '#scholarships' },
-    { label: 'Student Life', href: '#student-life' }
+    { label: 'Universities', href: '/universities' },
+    { label: 'Faculties', href: '/faculties' },
+    { label: 'Compare', href: '/compare' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' }
   ];
 
   const resources = [
-    { label: 'Application Guide', href: '#guide' },
-    { label: 'Admission Calendar', href: '#calendar' },
-    { label: 'Tuition Calculator', href: '#calculator' },
-    { label: 'Career Center', href: '#careers' },
-    { label: 'Study Abroad', href: '#abroad' },
-    { label: 'Alumni Network', href: '#alumni' }
+    { label: 'Application Guide', href: '/about' },
+    { label: 'Universities', href: '/universities' },
+    { label: 'Faculties', href: '/faculties' },
+    { label: 'Compare Universities', href: '/compare' }
   ];
 
   const support = [
-    { label: 'Help Center', href: '#help' },
-    { label: 'Contact Us', href: '#contact' },
-    { label: 'FAQs', href: '#faq' },
-    { label: 'Technical Support', href: '#tech' },
-    { label: 'Privacy Policy', href: '#privacy' },
-    { label: 'Terms of Service', href: '#terms' }
+    { label: 'Contact Us', href: '/contact' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Privacy Policy', href: '/about' },
+    { label: 'Terms of Service', href: '/about' }
   ];
+
+  const socialMediaLinks = {
+    facebook: 'https://www.facebook.com',
+    twitter: 'https://www.twitter.com',
+    instagram: 'https://www.instagram.com',
+    linkedin: 'https://www.linkedin.com'
+  };
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -72,14 +103,18 @@ export function Footer() {
             </p>
             <div className="max-w-md mx-auto">
               <div className="flex gap-3">
-                <Input
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/70 focus:border-white"
-                />
+                <div className="flex-1">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={handleEmailChange}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
+                    className={`bg-white/10 border-white/20 text-white placeholder:text-white/70 focus:border-white ${
+                      error ? 'border-red-400 focus:border-red-400' : ''
+                    }`}
+                  />
+                </div>
                 <Button 
                   onClick={handleSubscribe}
                   className="bg-white text-blue-900 hover:bg-white/90 flex-shrink-0"
@@ -88,6 +123,12 @@ export function Footer() {
                   Subscribe
                 </Button>
               </div>
+              {error && (
+                <div className="mt-3 flex items-center justify-center gap-2 text-red-200 text-sm animate-in fade-in slide-in-from-top-2 duration-300">
+                  <AlertCircle className="h-4 w-4" />
+                  <span>{error}</span>
+                </div>
+              )}
               {showSuccess && (
                 <div className="mt-3 flex items-center justify-center gap-2 text-white text-sm animate-in fade-in slide-in-from-top-2 duration-300">
                   <CheckCircle className="h-4 w-4 text-green-300" />
@@ -135,18 +176,46 @@ export function Footer() {
 
               {/* Social Media */}
               <div className="flex space-x-4">
-                <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
-                  <Facebook className="h-4 w-4" />
-                </Button>
-                <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
-                  <Twitter className="h-4 w-4" />
-                </Button>
-                <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
-                  <Instagram className="h-4 w-4" />
-                </Button>
-                <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
-                  <Linkedin className="h-4 w-4" />
-                </Button>
+                <a
+                  href={socialMediaLinks.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                >
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                    <Facebook className="h-4 w-4" />
+                  </Button>
+                </a>
+                <a
+                  href={socialMediaLinks.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Twitter"
+                >
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                    <Twitter className="h-4 w-4" />
+                  </Button>
+                </a>
+                <a
+                  href={socialMediaLinks.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                    <Instagram className="h-4 w-4" />
+                  </Button>
+                </a>
+                <a
+                  href={socialMediaLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                    <Linkedin className="h-4 w-4" />
+                  </Button>
+                </a>
               </div>
             </div>
 
@@ -221,13 +290,13 @@ export function Footer() {
               </div>
               
               <div className="flex space-x-4 text-sm">
-                <a href="#privacy" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/about" className="text-gray-400 hover:text-white transition-colors">
                   Privacy Policy
                 </a>
-                <a href="#terms" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/about" className="text-gray-400 hover:text-white transition-colors">
                   Terms of Service
                 </a>
-                <a href="#cookies" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/about" className="text-gray-400 hover:text-white transition-colors">
                   Cookie Policy
                 </a>
               </div>
