@@ -363,7 +363,7 @@ export function Footer() {
 
       {/* Not Added Modal */}
       <Dialog open={showNotAddedModal} onOpenChange={setShowNotAddedModal}>
-        <DialogContent className="sm:max-w-xs bg-gray-900 border-gray-700 p-6">
+        <DialogContent className="sm:max-w-xs w-full h-auto bg-gray-900 border-gray-700 p-6">
           <DialogHeader>
             <div className="flex flex-col items-center justify-center py-2">
               <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-900 to-emerald-600 flex items-center justify-center mb-3">
