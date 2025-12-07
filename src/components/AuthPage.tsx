@@ -34,13 +34,8 @@ export function AuthPage() {
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-background">
-      {/* Animated Background - Only visible in light mode */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-emerald-50 dark:hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse delay-1000"></div>
-      </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 min-h-screen flex items-center z-10">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 min-h-screen flex items-center z-10 bg-background">
         <div className="w-full grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - Branding */}
           <motion.div
@@ -85,9 +80,9 @@ export function AuthPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Card className="p-8 shadow-2xl border border-border bg-card dark:bg-gray-800/50">
+            <Card className="p-8 shadow-2xl border border-border bg-card">
               <Tabs defaultValue="login" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-8">
+                <TabsList className="grid w-full grid-cols-2 mb-8 bg-muted-tab-bg">
                   <TabsTrigger value="login">Login</TabsTrigger>
                   <TabsTrigger value="register">Register</TabsTrigger>
                 </TabsList>
