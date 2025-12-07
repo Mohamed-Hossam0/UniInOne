@@ -3,13 +3,6 @@ import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Separator } from './ui/separator';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from './ui/dialog';
 import { 
   Facebook, 
   Twitter, 
@@ -21,16 +14,15 @@ import {
   Globe,
   Send,
   CheckCircle,
-  AlertCircle,
-  Info
+  AlertCircle
 } from 'lucide-react';
+import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState('');
-  const [showNotAddedModal, setShowNotAddedModal] = useState(false);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -80,12 +72,6 @@ export function Footer() {
     });
   };
 
-  // Handle links that are not added yet
-  const handleNotAdded = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setShowNotAddedModal(true);
-  };
-
   const quickLinks = [
     { label: 'Universities', href: '/universities' },
     { label: 'Faculties', href: '/faculties' },
@@ -95,17 +81,17 @@ export function Footer() {
   ];
 
   const resources = [
-    { label: 'Application Guide', href: '/about', notAdded: true },
-    { label: 'Universities', href: '/universities', notAdded: false },
-    { label: 'Faculties', href: '/faculties', notAdded: false },
-    { label: 'Compare Universities', href: '/compare', notAdded: false }
+    { label: 'Application Guide', href: '/about' },
+    { label: 'Universities', href: '/universities' },
+    { label: 'Faculties', href: '/faculties' },
+    { label: 'Compare Universities', href: '/compare' }
   ];
 
   const support = [
-    { label: 'Contact Us', href: '/contact', notAdded: false },
-    { label: 'About Us', href: '/about', notAdded: false },
-    { label: 'Privacy Policy', href: '/about', notAdded: true },
-    { label: 'Terms of Service', href: '/about', notAdded: true }
+    { label: 'Contact Us', href: '/contact' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Privacy Policy', href: '/about' },
+    { label: 'Terms of Service', href: '/about' }
   ];
 
   const socialMediaLinks = {
@@ -172,8 +158,17 @@ export function Footer() {
             {/* Brand Section */}
             <div className="lg:col-span-2">
               <div className="flex items-center mb-4">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white font-bold text-lg">U</span>
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center mr-3">
+                  <span className="text-white font-bold text-lg">
+                      {/* Logo 
+                        i want to fully cover the div with the logo
+                      */}
+                      <img 
+                        src="/UniInOneLogo.jpg" 
+                        alt="UniInOne Logo" 
+                        className="w-11 h-11 mr-3 rounded-full object-cover object-center"
+                      />
+                  </span>
                 </div>
                 <span className="text-xl font-bold">UniInOne</span>
               </div>
@@ -273,25 +268,14 @@ export function Footer() {
               <ul className="space-y-2">
                 {resources.map((resource, index) => (
                   <li key={index}>
-                    {resource.notAdded ? (
-                      <a 
-                        href={resource.href} 
-                        onClick={handleNotAdded}
-                        className="text-gray-300 hover:text-white transition-colors text-sm"
-                        style={{ cursor: 'pointer' }}
-                      >
-                        {resource.label}
-                      </a>
-                    ) : (
-                      <Link 
-                        to={resource.href} 
-                        onClick={scrollToTop}
-                        className="text-gray-300 hover:text-white transition-colors text-sm"
-                        style={{ cursor: 'pointer' }}
-                      >
-                        {resource.label}
-                      </Link>
-                    )}
+                    <Link 
+                      to={resource.href} 
+                      onClick={scrollToTop}
+                      className="text-gray-300 hover:text-white transition-colors text-sm"
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {resource.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -303,25 +287,14 @@ export function Footer() {
               <ul className="space-y-2">
                 {support.map((item, index) => (
                   <li key={index}>
-                    {item.notAdded ? (
-                      <a 
-                        href={item.href} 
-                        onClick={handleNotAdded}
-                        className="text-gray-300 hover:text-white transition-colors text-sm"
-                        style={{ cursor: 'pointer' }}
-                      >
-                        {item.label}
-                      </a>
-                    ) : (
-                      <Link 
-                        to={item.href} 
-                        onClick={scrollToTop}
-                        className="text-gray-300 hover:text-white transition-colors text-sm"
-                        style={{ cursor: 'pointer' }}
-                      >
-                        {item.label}
-                      </Link>
-                    )}
+                    <Link 
+                      to={item.href} 
+                      onClick={scrollToTop}
+                      className="text-gray-300 hover:text-white transition-colors text-sm"
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -347,36 +320,20 @@ export function Footer() {
               </div>
               
               <div className="flex space-x-4 text-sm">
-                <a href="/about" onClick={handleNotAdded} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
+                <Link to="/about" onClick={scrollToTop} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
                   Privacy Policy
-                </a>
-                <a href="/about" onClick={handleNotAdded} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
+                </Link>
+                <Link to="/about" onClick={scrollToTop} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
                   Terms of Service
-                </a>
-                <a href="/about" onClick={handleNotAdded} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
+                </Link>
+                <Link to="/about" onClick={scrollToTop} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
                   Cookie Policy
-                </a>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Not Added Modal */}
-      <Dialog open={showNotAddedModal} onOpenChange={setShowNotAddedModal}>
-        <DialogContent className="max-w-sm w-full mx-auto h-auto bg-gray-900 border-gray-700 p-6">
-          <DialogHeader>
-            <div className="flex flex-col items-center justify-center py-2">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-900 to-emerald-600 flex items-center justify-center mb-3">
-                <Info className="h-6 w-6 text-white" />
-              </div>
-              <DialogTitle className="text-center text-lg font-semibold text-white mb-1">
-                Not Available
-              </DialogTitle>
-            </div>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
     </footer>
   );
 }

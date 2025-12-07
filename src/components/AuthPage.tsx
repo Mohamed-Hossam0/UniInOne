@@ -136,16 +136,6 @@ export function AuthPage() {
                       Sign In
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
-
-                    <div className="text-center">
-                      <button
-                        type="button"
-                        onClick={() => navigate('/admin-login')}
-                        className="text-sm text-blue-900 dark:text-blue-400 hover:underline"
-                      >
-                        Admin Login →
-                      </button>
-                    </div>
                   </form>
                 </TabsContent>
 

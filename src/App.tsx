@@ -17,6 +17,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { UniversitiesProvider } from './context/UniversitiesContext';
+import { Toaster } from './components/ui/sonner';
 
 export default function App() {
   return (
@@ -59,6 +60,7 @@ export default function App() {
             </main>
             <Footer />
           </div>
+          <Toaster />
           </UniversitiesProvider>
         </AuthProvider>
       </ThemeProvider>

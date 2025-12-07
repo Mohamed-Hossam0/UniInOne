@@ -163,7 +163,7 @@ export function UniversityDetail() {
               <CardTitle>About {university.name}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-white-700 leading-relaxed">
                 {university.description} Established in {university.founded}, this prestigious institution has been 
                 shaping the minds of Egypt's future leaders for over {new Date().getFullYear() - university.founded} years. 
                 With a diverse student body of {university.students} students and world-class faculty, 

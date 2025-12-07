@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Search, ArrowRight, MapPin, Users, GraduationCap } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { toast } from 'sonner';
 
 export function Hero() {
   const navigate = useNavigate();
@@ -13,8 +14,9 @@ export function Hero() {
   const handleSearch = () => {
     if (searchQuery.trim()) {
       navigate(`/universities?search=${encodeURIComponent(searchQuery.trim())}`);
-    } else {
-      navigate('/universities');
+    }else{
+      // i want to show a message that the search query is required and the user should enter a search query
+      toast.error('Search query is required');
     }
   };
 
