@@ -12,24 +12,53 @@ import {
   MapPin, 
   Globe,
   Send,
-  CheckCircle
+  CheckCircle,
+  AlertCircle
 } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState('');
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubscribe = () => {
-    if (email.trim()) {
-      // Reset the input field
-      setEmail('');
-      // Show success message
-      setShowSuccess(true);
-      // Hide success message after 3 seconds
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 3000);
+    // Clear previous errors
+    setError('');
+    
+    // Check if email is empty
+    if (!email.trim()) {
+      setError('Please enter your email address');
+      return;
+    }
+
+    // Validate email format
+    if (!validateEmail(email.trim())) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    // If validation passes, proceed with subscription
+    // Reset the input field
+    setEmail('');
+    // Show success message
+    setShowSuccess(true);
+    // Hide success message after 3 seconds
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 3000);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    // Clear error when user starts typing
+    if (error) {
+      setError('');
     }
   };
 
@@ -72,14 +101,18 @@ export function Footer() {
             </p>
             <div className="max-w-md mx-auto">
               <div className="flex gap-3">
-                <Input
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/70 focus:border-white"
-                />
+                <div className="flex-1">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={handleEmailChange}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
+                    className={`bg-white/10 border-white/20 text-white placeholder:text-white/70 focus:border-white ${
+                      error ? 'border-red-400 focus:border-red-400' : ''
+                    }`}
+                  />
+                </div>
                 <Button 
                   onClick={handleSubscribe}
                   className="bg-white text-blue-900 hover:bg-white/90 flex-shrink-0"
@@ -88,8 +121,14 @@ export function Footer() {
                   Subscribe
                 </Button>
               </div>
+              {error && (
+                <div className="mt-3 flex items-center justify-center gap-2 text-red-200 text-sm animate-in fade-in slide-in-from-top-2 duration-300">
+                  <AlertCircle className="h-4 w-4" />
+                  <span>{error}</span>
+                </div>
+              )}
               {showSuccess && (
-                <div className="mt-3 flex items-center justify-center gap-2 text-white text-sm">
+                <div className="mt-3 flex items-center justify-center gap-2 text-white text-sm animate-in fade-in slide-in-from-top-2 duration-300">
                   <CheckCircle className="h-4 w-4 text-green-300" />
                   <span>Successfully subscribed! Thank you.</span>
                 </div>
