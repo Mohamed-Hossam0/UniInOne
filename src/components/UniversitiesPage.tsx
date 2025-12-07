@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Card, CardContent, CardHeader } from './ui/card';
@@ -11,11 +11,33 @@ import { useUniversities } from '../context/UniversitiesContext';
 
 export function UniversitiesPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { universities } = useUniversities();
   const [searchQuery, setSearchQuery] = useState('');
   const [cityFilter, setCityFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [sortBy, setSortBy] = useState('ranking');
+
+  // Get search query from URL params on mount
+  useEffect(() => {
+    const searchParam = searchParams.get('search');
+    if (searchParam) {
+      setSearchQuery(decodeURIComponent(searchParam));
+    }
+  }, [searchParams]);
+
+  // Update URL when user presses Enter
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const newSearchParams = new URLSearchParams(searchParams);
+      if (searchQuery.trim()) {
+        newSearchParams.set('search', searchQuery.trim());
+      } else {
+        newSearchParams.delete('search');
+      }
+      navigate(`/universities?${newSearchParams.toString()}`, { replace: true });
+    }
+  };
 
   const cities = ['all', 'Cairo', 'Alexandria', 'Giza', 'Mansoura', 'Assiut'];
   const types = ['all', 'Public', 'Private'];
@@ -57,6 +79,7 @@ export function UniversitiesPage() {
               placeholder="Search universities or programs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
               className="pl-10"
             />
           </div>

@@ -12,6 +12,8 @@ export function Hero() {
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
+      navigate(`/universities?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
       navigate('/universities');
     }
   };

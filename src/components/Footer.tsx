@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Separator } from './ui/separator';
@@ -10,11 +11,27 @@ import {
   Phone, 
   MapPin, 
   Globe,
-  Send
+  Send,
+  CheckCircle
 } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleSubscribe = () => {
+    if (email.trim()) {
+      // Reset the input field
+      setEmail('');
+      // Show success message
+      setShowSuccess(true);
+      // Hide success message after 3 seconds
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 3000);
+    }
+  };
 
   const quickLinks = [
     { label: 'Universities', href: '#universities' },
@@ -53,15 +70,30 @@ export function Footer() {
             <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
               Get the latest news about university admissions, deadlines, and opportunities delivered to your inbox.
             </p>
-            <div className="max-w-md mx-auto flex gap-3">
-              <Input
-                placeholder="Enter your email address"
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/70 focus:border-white"
-              />
-              <Button className="bg-white text-blue-900 hover:bg-white/90 flex-shrink-0">
-                <Send className="h-4 w-4 mr-2" />
-                Subscribe
-              </Button>
+            <div className="max-w-md mx-auto">
+              <div className="flex gap-3">
+                <Input
+                  type="email"
+                  placeholder="Enter your email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
+                  className="bg-white/10 border-white/20 text-white placeholder:text-white/70 focus:border-white"
+                />
+                <Button 
+                  onClick={handleSubscribe}
+                  className="bg-white text-blue-900 hover:bg-white/90 flex-shrink-0"
+                >
+                  <Send className="h-4 w-4 mr-2" />
+                  Subscribe
+                </Button>
+              </div>
+              {showSuccess && (
+                <div className="mt-3 flex items-center justify-center gap-2 text-white text-sm">
+                  <CheckCircle className="h-4 w-4 text-green-300" />
+                  <span>Successfully subscribed! Thank you.</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
