@@ -55,7 +55,7 @@
   --popover-foreground: #f1f5f9;
   /* Primary - Light blue for buttons/links */
   --primary: #60a5fa;
-  --primary-foreground: #0f172a;
+  --primary-foreground: oklch(1 0 0);
   /* Secondary - Medium gray */
   --secondary: #334155;
   --secondary-foreground: #f1f5f9;
