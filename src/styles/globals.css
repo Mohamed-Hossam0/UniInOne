@@ -13,6 +13,7 @@
   --secondary: oklch(0.95 0.0058 264.53);
   --secondary-foreground: #030213;
   --muted: #ececf0;
+  --muted-tab-bg: #ececf0;
   --muted-foreground: #717182;
   --accent: #e9ebef;
   --accent-foreground: #030213;
@@ -60,6 +61,7 @@
   --secondary-foreground: #f1f5f9;
   /* Muted - For subtle backgrounds */
   --muted: #1e293b;
+  --muted-tab-bg: #141b27;
   --muted-foreground: #94a3b8;
   /* Accent - For hover states */
   --accent: #334155;
@@ -108,6 +110,7 @@
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
+  --color-muted-tab-bg: var(--muted-tab-bg);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
