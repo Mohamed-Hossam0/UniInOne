@@ -62,6 +62,14 @@ export function Footer() {
     }
   };
 
+  // Scroll to top of page
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const quickLinks = [
     { label: 'Universities', href: '/universities' },
     { label: 'Faculties', href: '/faculties' },
@@ -118,6 +126,7 @@ export function Footer() {
                 <Button 
                   onClick={handleSubscribe}
                   className="bg-white text-blue-900 hover:bg-white/90 flex-shrink-0"
+                  style={{ cursor: 'pointer' }}
                 >
                   <Send className="h-4 w-4 mr-2" />
                   Subscribe
@@ -181,8 +190,9 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
+                  className="cursor-pointer"
                 >
-                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white" style={{ cursor: 'pointer' }}>
                     <Facebook className="h-4 w-4" />
                   </Button>
                 </a>
@@ -191,8 +201,9 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Twitter"
+                  style={{ cursor: 'pointer' }}
                 >
-                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white" style={{ cursor: 'pointer' }}>
                     <Twitter className="h-4 w-4" />
                   </Button>
                 </a>
@@ -201,8 +212,9 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
+                  style={{ cursor: 'pointer' }}
                 >
-                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white" style={{ cursor: 'pointer' }}>
                     <Instagram className="h-4 w-4" />
                   </Button>
                 </a>
@@ -211,8 +223,9 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
+                  style={{ cursor: 'pointer' }}
                 >
-                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white">
+                  <Button size="sm" variant="outline" className="border-gray-600 text-gray-300 hover:text-white hover:border-white" style={{ cursor: 'pointer' }}>
                     <Linkedin className="h-4 w-4" />
                   </Button>
                 </a>
@@ -227,7 +240,9 @@ export function Footer() {
                   <li key={index}>
                     <a 
                       href={link.href} 
+                      onClick={scrollToTop}
                       className="text-gray-300 hover:text-white transition-colors text-sm"
+                      style={{ cursor: 'pointer' }}
                     >
                       {link.label}
                     </a>
@@ -244,7 +259,9 @@ export function Footer() {
                   <li key={index}>
                     <a 
                       href={resource.href} 
+                      onClick={scrollToTop}
                       className="text-gray-300 hover:text-white transition-colors text-sm"
+                      style={{ cursor: 'pointer' }}
                     >
                       {resource.label}
                     </a>
@@ -261,7 +278,9 @@ export function Footer() {
                   <li key={index}>
                     <a 
                       href={item.href} 
+                      onClick={scrollToTop}
                       className="text-gray-300 hover:text-white transition-colors text-sm"
+                      style={{ cursor: 'pointer' }}
                     >
                       {item.label}
                     </a>
@@ -290,13 +309,13 @@ export function Footer() {
               </div>
               
               <div className="flex space-x-4 text-sm">
-                <a href="/about" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/about" onClick={scrollToTop} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
                   Privacy Policy
                 </a>
-                <a href="/about" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/about" onClick={scrollToTop} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
                   Terms of Service
                 </a>
-                <a href="/about" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/about" onClick={scrollToTop} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
                   Cookie Policy
                 </a>
               </div>
