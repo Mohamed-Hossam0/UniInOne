@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Separator } from './ui/separator';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from './ui/dialog';
 import { 
   Facebook, 
   Twitter, 
@@ -14,7 +21,8 @@ import {
   Globe,
   Send,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Info
 } from 'lucide-react';
 
 export function Footer() {
@@ -22,6 +30,7 @@ export function Footer() {
   const [email, setEmail] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [showNotAddedModal, setShowNotAddedModal] = useState(false);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -71,6 +80,12 @@ export function Footer() {
     });
   };
 
+  // Handle links that are not added yet
+  const handleNotAdded = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setShowNotAddedModal(true);
+  };
+
   const quickLinks = [
     { label: 'Universities', href: '/universities' },
     { label: 'Faculties', href: '/faculties' },
@@ -80,17 +95,17 @@ export function Footer() {
   ];
 
   const resources = [
-    { label: 'Application Guide', href: '/about' },
-    { label: 'Universities', href: '/universities' },
-    { label: 'Faculties', href: '/faculties' },
-    { label: 'Compare Universities', href: '/compare' }
+    { label: 'Application Guide', href: '/about', notAdded: true },
+    { label: 'Universities', href: '/universities', notAdded: false },
+    { label: 'Faculties', href: '/faculties', notAdded: false },
+    { label: 'Compare Universities', href: '/compare', notAdded: false }
   ];
 
   const support = [
-    { label: 'Contact Us', href: '/contact' },
-    { label: 'About Us', href: '/about' },
-    { label: 'Privacy Policy', href: '/about' },
-    { label: 'Terms of Service', href: '/about' }
+    { label: 'Contact Us', href: '/contact', notAdded: false },
+    { label: 'About Us', href: '/about', notAdded: false },
+    { label: 'Privacy Policy', href: '/about', notAdded: true },
+    { label: 'Terms of Service', href: '/about', notAdded: true }
   ];
 
   const socialMediaLinks = {
@@ -258,14 +273,25 @@ export function Footer() {
               <ul className="space-y-2">
                 {resources.map((resource, index) => (
                   <li key={index}>
-                    <Link 
-                      to={resource.href} 
-                      onClick={scrollToTop}
-                      className="text-gray-300 hover:text-white transition-colors text-sm"
-                      style={{ cursor: 'pointer' }}
-                    >
-                      {resource.label}
-                    </Link>
+                    {resource.notAdded ? (
+                      <a 
+                        href={resource.href} 
+                        onClick={handleNotAdded}
+                        className="text-gray-300 hover:text-white transition-colors text-sm"
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {resource.label}
+                      </a>
+                    ) : (
+                      <Link 
+                        to={resource.href} 
+                        onClick={scrollToTop}
+                        className="text-gray-300 hover:text-white transition-colors text-sm"
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {resource.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -277,14 +303,25 @@ export function Footer() {
               <ul className="space-y-2">
                 {support.map((item, index) => (
                   <li key={index}>
-                    <Link 
-                      to={item.href} 
-                      onClick={scrollToTop}
-                      className="text-gray-300 hover:text-white transition-colors text-sm"
-                      style={{ cursor: 'pointer' }}
-                    >
-                      {item.label}
-                    </Link>
+                    {item.notAdded ? (
+                      <a 
+                        href={item.href} 
+                        onClick={handleNotAdded}
+                        className="text-gray-300 hover:text-white transition-colors text-sm"
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link 
+                        to={item.href} 
+                        onClick={scrollToTop}
+                        className="text-gray-300 hover:text-white transition-colors text-sm"
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -310,20 +347,36 @@ export function Footer() {
               </div>
               
               <div className="flex space-x-4 text-sm">
-                <Link to="/about" onClick={scrollToTop} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
+                <a href="/about" onClick={handleNotAdded} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
                   Privacy Policy
-                </Link>
-                <Link to="/about" onClick={scrollToTop} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
+                </a>
+                <a href="/about" onClick={handleNotAdded} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
                   Terms of Service
-                </Link>
-                <Link to="/about" onClick={scrollToTop} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
+                </a>
+                <a href="/about" onClick={handleNotAdded} className="text-gray-400 hover:text-white transition-colors" style={{ cursor: 'pointer' }}>
                   Cookie Policy
-                </Link>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Not Added Modal */}
+      <Dialog open={showNotAddedModal} onOpenChange={setShowNotAddedModal}>
+        <DialogContent className="w-20 h-20 bg-gray-900 border-gray-700 p-6">
+          <DialogHeader>
+            <div className="flex flex-col items-center justify-center py-2">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-900 to-emerald-600 flex items-center justify-center mb-3">
+                <Info className="h-6 w-6 text-white" />
+              </div>
+              <DialogTitle className="text-center text-lg font-semibold text-white mb-1">
+                Not Available
+              </DialogTitle>
+            </div>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </footer>
   );
 }
